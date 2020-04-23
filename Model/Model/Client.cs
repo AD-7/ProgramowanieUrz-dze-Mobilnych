@@ -9,9 +9,9 @@ namespace Model
         public int Id { get; private set; }
         public string Name { get; private set; }
         public string PhoneNumber { get; private set; }
-        public Adress Adress { get; private set; }
+        public Address Adress { get; private set; }
 
-        public Client(int id, string name, string phoneNumber, Adress adress)
+        public Client(int id, string name, string phoneNumber, Address adress)
         {
             Id = id;
             Name = name;

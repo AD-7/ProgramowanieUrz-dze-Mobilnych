@@ -11,10 +11,10 @@ namespace Model
         public DateTime OrderDate { get; private set; }
         public List<Dish> Dishes { get; private set; }
         public bool Delivery { get; private set; }
-        public Adress DeliveryAdress { get; private set; }
+        public Address DeliveryAdress { get; private set; }
         public double TotalPrice { get; private set; }
 
-        public Order(int id, Client client, DateTime orderDate, bool delivery, Adress deliveryAdress)
+        public Order(int id, Client client, DateTime orderDate, bool delivery, Address deliveryAdress)
         {
             Id = id;
             Client = client;
