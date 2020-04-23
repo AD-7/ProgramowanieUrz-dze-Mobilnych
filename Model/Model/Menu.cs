@@ -4,10 +4,17 @@ using System.Text;
 
 namespace Model
 {
-    class Menu
+    public class Menu
     {
-        int id;
-        string name;
-        List<Dish> dishes;
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public List<Dish> Dishes { get; private set; }
+
+        public Menu(int id, string name, List<Dish> dishes)
+        {
+            Id = id;
+            Name = name;
+            Dishes = dishes;
+        }
     }
 }

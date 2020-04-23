@@ -4,10 +4,15 @@ using System.Text;
 
 namespace Model
 {
-    class Product
+    public class Product
     {
-        int id;
-        string name;
+        public int Id { get; private set; }
+        public string Name { get; private set; }
 
+        public Product(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }

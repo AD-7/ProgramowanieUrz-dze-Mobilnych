@@ -4,14 +4,25 @@ using System.Text;
 
 namespace Model
 {
-    class Order
+    public class Order
     {
-        int id;
-        Client client;
-        DateTime orderDate;
-        List<Dish> dishes;
-        bool delivery;
-        Adress deliveryAdress;
-        double totalPrice;
+        public int Id { get; private set; }
+        public Client Client { get; private set; }
+        public DateTime OrderDate { get; private set; }
+        public List<Dish> Dishes { get; private set; }
+        public bool Delivery { get; private set; }
+        public Adress DeliveryAdress { get; private set; }
+        public double TotalPrice { get; private set; }
+
+        public Order(int id, Client client, DateTime orderDate, bool delivery, Adress deliveryAdress)
+        {
+            Id = id;
+            Client = client;
+            OrderDate = orderDate;
+            Dishes = new List<Dish>();
+            Delivery = delivery;
+            DeliveryAdress = deliveryAdress;
+            TotalPrice = 0.0;
+        }
     }
 }

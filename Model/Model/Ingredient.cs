@@ -4,9 +4,15 @@ using System.Text;
 
 namespace Model
 {
-    class Ingredient
+    public class Ingredient
     {
-        Product productName;
-        int quantity;
+        public Product ProductName { get; private set; }
+        public int Quantity { get; private set; }
+
+        public Ingredient(Product productName, int quantity)
+        {
+            ProductName = productName;
+            Quantity = quantity;
+        }
     }
 }
