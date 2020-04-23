@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Model
 {
-    class Ingredient
+    class Product
     {
-        Product productName;
-        int quantity;
+        int id;
+        string name;
+
     }
 }

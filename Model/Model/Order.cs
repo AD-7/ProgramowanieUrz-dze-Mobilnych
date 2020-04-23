@@ -7,11 +7,11 @@ namespace Model
     class Order
     {
         int id;
-        string customerName;
-        int phoneNumber;
+        Client client;
         DateTime orderDate;
         List<Dish> dishes;
         bool delivery;
-        Adress adress;
+        Adress deliveryAdress;
+        double totalPrice;
     }
 }
