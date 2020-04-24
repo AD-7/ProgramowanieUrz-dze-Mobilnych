@@ -20,8 +20,43 @@ namespace LogicUnitTests
             tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
 
             Task.WaitAll(tasksInProgress.ToArray());
-            Assert.AreEqual(2, orderManager.Orders.Count, "Wrong order number");
-            Assert.AreNotEqual(orderManager.Orders[0].Id, orderManager.Orders[1].Id, "Orders ID are not unical");
+            Assert.AreEqual(2, orderManager.activeOrders.Count, "Wrong order number");
+            Assert.AreNotEqual(orderManager.activeOrders[0].Id, orderManager.activeOrders[1].Id, "Orders ID are not unical");
+
+        }
+
+        [TestMethod]
+        public void CompletingOrderTest()
+        {
+            List<Task> tasksInProgress = new List<Task>();
+
+            OrderManager orderManager = new OrderManager();
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CompleteOrder(1)));
+
+            Task.WaitAll(tasksInProgress.ToArray());
+            Assert.AreEqual(2, orderManager.activeOrders.Count, "Wrong order number");
+            Assert.AreEqual(1, orderManager.completedOrders.Count, "Wrong order number");
+          
+
+        }
+
+        [TestMethod]
+        public void GetOrderByIdTest()
+        {
+            List<Task> tasksInProgress = new List<Task>();
+
+            OrderManager orderManager = new OrderManager();
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, true, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CompleteOrder(1)));
+
+            Task.WaitAll(tasksInProgress.ToArray());
+            Assert.AreEqual(false, orderManager.GetActiveOrderById(0).Delivery, "Wrong order number");
+            Assert.AreEqual(true, orderManager.GetCompletedOrderById(1).Delivery, "Wrong order number");
+
 
         }
     }
