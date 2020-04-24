@@ -26,12 +26,27 @@ namespace LogicUnitTests
 
         }
 
+        [TestMethod]
+        public void GetClientByNameTest()
+        {
+
+            List<Task> tasksInProgress = new List<Task>();
+            ClientManager clientManager = new ClientManager();
+
+            tasksInProgress.Add(Task.Run(() => clientManager.CreateClient("test1", "", null)));
+            tasksInProgress.Add(Task.Run(() => clientManager.CreateClient("test2", "", null)));
+
+            Task.WaitAll(tasksInProgress.ToArray());
+
+            Assert.AreEqual(1, clientManager.GetClientByName("test2").Id, "Wrong order number");
+          
+
+        }
 
 
 
 
 
 
-    
     }
 }

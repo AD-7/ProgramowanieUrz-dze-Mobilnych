@@ -54,8 +54,9 @@ namespace LogicUnitTests
             tasksInProgress.Add(Task.Run(() => orderManager.CompleteOrder(1)));
 
             Task.WaitAll(tasksInProgress.ToArray());
-            Assert.AreEqual(false, orderManager.GetActiveOrderById(0).Delivery, "Wrong order number");
-            Assert.AreEqual(true, orderManager.GetCompletedOrderById(1).Delivery, "Wrong order number");
+            Assert.AreEqual(false, orderManager.GetCompletedOrderById(1).Delivery, "Wrong order number");
+          
+           
 
 
         }

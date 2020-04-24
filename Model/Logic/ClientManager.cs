@@ -24,12 +24,19 @@ namespace Logic
         {
             lock (clientCriticalSection)
             {
-                Client client = new Client(currentClientIndex,name, phoneNumber, adress);
-                clients.Add(client);
-                currentClientIndex++;
+                if (!clients.Exists(x => x.Name == name))
+                {
+                    Client client = new Client(currentClientIndex, name, phoneNumber, adress);
+                    clients.Add(client);
+                    currentClientIndex++;
+                }
             }
         }
 
+        public Client GetClientByName(string name)
+        {
+            return clients.Find(x => x.Name == name);
+        }
 
 
     }
