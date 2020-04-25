@@ -16,8 +16,8 @@ namespace LogicUnitTests
             List<Task> tasksInProgress = new List<Task>();
             
             OrderManager orderManager = new OrderManager();
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
 
             Task.WaitAll(tasksInProgress.ToArray());
             Assert.AreEqual(2, orderManager.activeOrders.Count, "Wrong order number");
@@ -31,9 +31,9 @@ namespace LogicUnitTests
             List<Task> tasksInProgress = new List<Task>();
 
             OrderManager orderManager = new OrderManager();
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(2,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
             tasksInProgress.Add(Task.Run(() => orderManager.CompleteOrder(1)));
 
             Task.WaitAll(tasksInProgress.ToArray());
@@ -49,12 +49,13 @@ namespace LogicUnitTests
             List<Task> tasksInProgress = new List<Task>();
 
             OrderManager orderManager = new OrderManager();
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, false, null)));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(null, DateTime.Now, true, null)));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now, false, null,DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now, true, null, DateTime.Now.AddHours(1))));
             tasksInProgress.Add(Task.Run(() => orderManager.CompleteOrder(1)));
 
             Task.WaitAll(tasksInProgress.ToArray());
-            Assert.AreEqual(false, orderManager.GetCompletedOrderById(1).Delivery, "Wrong order number");
+            
+            Assert.AreEqual(true, orderManager.completedOrders[0].Delivery, "Wrong order number");
           
            
 

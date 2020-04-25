@@ -13,30 +13,31 @@ namespace Logic
         private readonly object orderCriticalSection = new object();
         public List<Order> activeOrders { get; private set; }
         public List<Order> completedOrders { get; private set; }
-        private int currentOrderIndex;
+        
 
         public OrderManager()
         {
             activeOrders = new List<Order>();
             completedOrders = new List<Order>();
-            currentOrderIndex = 0;
+         
         }
 
-        public void CreateOrder(Client client, DateTime orderDate, bool delivery, Address deliveryAddress)
+        public void CreateOrder(int currentOrderIndex,Client client, DateTime orderDate, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
         {
             lock (orderCriticalSection)
             {
-                Order order = new Order(currentOrderIndex, client, orderDate, delivery, deliveryAddress);
+                Order order = new Order(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
                 activeOrders.Add(order);
-                currentOrderIndex++;
+                
             }
         }
 
         public void CompleteOrder(int Id)
         {
             Order tmp = activeOrders.Find(x => x.Id == Id);
+            completedOrders.Add(new Order(tmp.Id,tmp.Client,tmp.OrderDate,tmp.Delivery,tmp.DeliveryAdress,tmp.DeliveryEndTime));
             activeOrders.RemoveAll(x => x.Id == Id);
-            completedOrders.Add(tmp);
+          
         }
 
         public Order GetActiveOrderById(int Id)
