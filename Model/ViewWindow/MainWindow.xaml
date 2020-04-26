@@ -13,6 +13,9 @@
         <Button x:Name="addOrderButton" Content="create order" HorizontalAlignment="Left" Margin="66,52,0,0" VerticalAlignment="Top" Width="75" Click="addOrderButton_Click" IsDefault="True"/>
         <Button x:Name="addClientButton" Content="create client" HorizontalAlignment="Left" Margin="66,85,0,0" VerticalAlignment="Top" Width="75" Click="addClientButton_Click" IsDefault="True"/>
         <Button x:Name="completeLastOrderButton" Content="complete last order" HorizontalAlignment="Left" Margin="66,121,0,0" VerticalAlignment="Top" Width="128" Click="completeLastOrderButton_Click" IsDefault="True"/>
+        <ComboBox x:Name="dishesComboBox" HorizontalAlignment="Left" Margin="257,119,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="dishesComboBox_DropDownOpened"/>
+        <Button x:Name="addDishToListButton" Content="add selected dish" HorizontalAlignment="Left" Margin="261,146,0,0" VerticalAlignment="Top" Width="116" Click="addAddDishToList_Click" IsDefault="True"/>
+        <ListBox x:Name="addedDishesListBox" HorizontalAlignment="Left" Height="100" Margin="496,146,0,0" VerticalAlignment="Top" Width="100"/>
 
     </Grid>
 </Window>

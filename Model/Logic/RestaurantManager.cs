@@ -27,6 +27,9 @@ namespace Logic
         public void AddSampleData()
         {
             this.CreateDish("testDish", "s", new List<Ingredient>(), Category.alcohol, 15.50);
+            this.CreateDish("testDish1", "s", new List<Ingredient>(), Category.alcohol, 12.50);
+            this.CreateDish("testDish2", "s", new List<Ingredient>(), Category.alcohol, 8.50);
+            this.CreateDish("testDish3", "s", new List<Ingredient>(), Category.alcohol, 5.50);
         }
 
 

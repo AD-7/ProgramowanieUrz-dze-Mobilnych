@@ -1,4 +1,5 @@
 ﻿using Logic;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,11 @@ namespace ViewWindow
         private ReportReceiver reportReceiver;
         private ReportSender reportSender;
         private int completeOrderIndex = 0;
+        private List<string> dishesNames;
 
         public MainWindow()
         {
+            dishesNames = new List<string>();
             InitializeComponent();
 
             restaurantManager = new RestaurantManager();
@@ -45,10 +48,9 @@ namespace ViewWindow
 
         private void addOrderButton_Click(object sender, RoutedEventArgs e)
         {
-            List<string> dishesNames = new List<string>();
-            dishesNames.Add("testDish");
-            dishesNames.Add("testDish");
             restaurantManager.CreateOrder("test", DateTime.Now, false, dishesNames, "", "", "", DateTime.Now);
+            dishesNames.Clear();
+            addedDishesListBox.Items.Clear();
         }
 
         private void addClientButton_Click(object sender, RoutedEventArgs e)
@@ -61,6 +63,24 @@ namespace ViewWindow
         {
             restaurantManager.CompleteOrder(completeOrderIndex);
             completeOrderIndex++;
+        }
+
+
+        private void dishesComboBox_DropDownOpened(object sender, EventArgs e)
+        {
+            dishesComboBox.Items.Clear();
+            List<Dish> menu = restaurantManager.GetMenu();
+            foreach (Dish dish in menu)
+            {
+                dishesComboBox.Items.Add(dish.Name);
+            }
+            
+        }
+
+        private void addAddDishToList_Click(object sender, RoutedEventArgs e)
+        {
+            dishesNames.Add((string)dishesComboBox.SelectedItem);
+            addedDishesListBox.Items.Add((string)dishesComboBox.SelectedItem);
         }
     }
 }

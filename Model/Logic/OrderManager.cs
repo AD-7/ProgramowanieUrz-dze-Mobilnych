@@ -30,7 +30,7 @@ namespace Logic
         public void CompleteOrder(int Id)
         {
             Order tmp = ActiveOrders.Find(x => x.Id == Id);
-            CompletedOrders.Add(new Order(tmp.Id,tmp.Client,tmp.OrderDate,tmp.Dishes, tmp.Delivery,tmp.DeliveryAdress,tmp.DeliveryEndTime));
+            CompletedOrders.Add(new Order(tmp.Id,tmp.Client,tmp.OrderDate, tmp.Dishes, tmp.Delivery,tmp.DeliveryAdress,tmp.DeliveryEndTime));
             ActiveOrders.RemoveAll(x => x.Id == Id);
           
         }
