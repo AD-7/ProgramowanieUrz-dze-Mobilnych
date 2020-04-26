@@ -48,11 +48,20 @@ namespace Logic
             currentOrderIndex++;
         }
 
+        public void CompleteOrder(int Id)
+        {
+            orderManager.CompleteOrder(Id);
+        }
+
+        public void CompleteDelivery(int Id)
+        {
+            deliveryManager.CompleteOrder(Id);
+        }
+
         public List<Dish> GetMenu()
         {
             return menuManager.GetMenu();
         }
-
 
         public List<Order> GetActiveOrders()
         {
@@ -65,7 +74,7 @@ namespace Logic
         }
 
         //TO DO : wysyłanie raportu niezależnie od użytkownika
-        public double IncomeReport(DateTime from, DateTime to)  
+        public double IncomeReport(DateTime from, DateTime to)
         {
             double income = 0.0;
             foreach (Order order in orderManager.completedOrders)
@@ -85,6 +94,7 @@ namespace Logic
             }
             return income;
         }
+
 
 
     }
