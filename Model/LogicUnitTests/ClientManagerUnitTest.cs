@@ -13,7 +13,6 @@ namespace LogicUnitTests
         public void CreateClientTest()
         {
 
-            
             ClientManager clientManager = new ClientManager();
             clientManager.CreateClient("test1", "", null);
             clientManager.CreateClient("test2", "", null);

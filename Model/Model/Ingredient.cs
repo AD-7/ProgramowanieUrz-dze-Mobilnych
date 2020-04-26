@@ -6,12 +6,12 @@ namespace Model
 {
     public class Ingredient
     {
-        public Product ProductName { get; private set; }
+        public Product Product { get; private set; }
         public int Quantity { get; private set; }
 
-        public Ingredient(Product productName, int quantity)
+        public Ingredient(Product product, int quantity)
         {
-            ProductName = productName;
+            Product = product;
             Quantity = quantity;
         }
     }

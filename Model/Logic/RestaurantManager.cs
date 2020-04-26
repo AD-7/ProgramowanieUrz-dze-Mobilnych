@@ -91,7 +91,7 @@ namespace Logic
         }
 
         //TO DO : wysyłanie raportu niezależnie od użytkownika
-        public double IncomeReport(DateTime from, DateTime to)
+        public IncomeReport GenerateIncomeReport(DateTime from, DateTime to)
         {
             lock(criticalSection)
             {
@@ -111,7 +111,7 @@ namespace Logic
                         income += order.TotalPrice;
                     }
                 }
-                return income;
+                return new IncomeReport(income, from, to);
             }
             
         }
