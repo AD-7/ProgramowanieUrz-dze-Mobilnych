@@ -7,7 +7,7 @@ namespace Logic
 {
     public class RestaurantManager
     {
-
+        private readonly object criticalSection = new object();
         private ClientManager clientManager { get; set; }
         private MenuManager menuManager { get; set; }
         private DeliveryManager deliveryManager { get; set; }
@@ -27,35 +27,52 @@ namespace Logic
 
         public void CreateClient(string name, string phoneNumber, Address adress)
         {
-            clientManager.CreateClient(name, phoneNumber, adress);
+            lock(criticalSection)
+            {
+                clientManager.CreateClient(name, phoneNumber, adress);
+            }            
         }
 
         public void CreateDish(string name, string description, List<Ingredient> ingredients, Category category, double price)
         {
-            menuManager.AddDishToMenu(name, description, ingredients, category, price);
+            lock(criticalSection)
+            {
+                menuManager.AddDishToMenu(name, description, ingredients, category, price);
+            }           
         }
 
         public void CreateOrder(int currentOrderIndex, Client client, DateTime orderDate, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
         {
-            if (delivery)
+            lock(criticalSection)
             {
-                deliveryManager.CreateOrder(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
+                if (delivery)
+                {
+                    deliveryManager.CreateOrder(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
+                }
+                else
+                {
+                    orderManager.CreateOrder(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
+                }
+                currentOrderIndex++;
             }
-            else
-            {
-                orderManager.CreateOrder(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
-            }
-            currentOrderIndex++;
+           
         }
 
         public void CompleteOrder(int Id)
         {
-            orderManager.CompleteOrder(Id);
+            lock(criticalSection)
+            {
+                orderManager.CompleteOrder(Id);
+            }
+           
         }
 
         public void CompleteDelivery(int Id)
         {
-            deliveryManager.CompleteOrder(Id);
+            lock(criticalSection)
+            {
+                deliveryManager.CompleteOrder(Id);
+            }           
         }
 
         public List<Dish> GetMenu()
@@ -65,34 +82,38 @@ namespace Logic
 
         public List<Order> GetActiveOrders()
         {
-            return orderManager.activeOrders;
+            return orderManager.ActiveOrders;
         }
 
         public List<Order> GetActiveDeliveries()
         {
-            return deliveryManager.deliveryOrders;
+            return deliveryManager.DeliveryOrders;
         }
 
         //TO DO : wysyłanie raportu niezależnie od użytkownika
         public double IncomeReport(DateTime from, DateTime to)
         {
-            double income = 0.0;
-            foreach (Order order in orderManager.completedOrders)
+            lock(criticalSection)
             {
-                if (order.OrderDate > from && order.OrderDate < to)
+                double income = 0.0;
+                foreach (Order order in orderManager.CompletedOrders)
                 {
-                    income += order.TotalPrice;
+                    if (order.OrderDate > from && order.OrderDate < to)
+                    {
+                        income += order.TotalPrice;
+                    }
                 }
-            }
 
-            foreach (Order order in deliveryManager.deliveryCompleted)
-            {
-                if (order.OrderDate > from && order.OrderDate < to)
+                foreach (Order order in deliveryManager.DeliveryCompleted)
                 {
-                    income += order.TotalPrice;
+                    if (order.OrderDate > from && order.OrderDate < to)
+                    {
+                        income += order.TotalPrice;
+                    }
                 }
+                return income;
             }
-            return income;
+            
         }
 
 

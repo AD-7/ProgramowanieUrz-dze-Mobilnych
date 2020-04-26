@@ -13,16 +13,14 @@ namespace LogicUnitTests
         public void CreateClientTest()
         {
 
-            List<Task> tasksInProgress = new List<Task>();
+            
             ClientManager clientManager = new ClientManager();
+            clientManager.CreateClient("test1", "", null);
+            clientManager.CreateClient("test2", "", null);
 
-            tasksInProgress.Add(Task.Run(() => clientManager.CreateClient("test1","",null)));
-            tasksInProgress.Add(Task.Run(() => clientManager.CreateClient("test2", "", null)));
-
-            Task.WaitAll(tasksInProgress.ToArray());
-
-            Assert.AreEqual(2, clientManager.clients.Count, "Wrong order number");
-            Assert.AreNotEqual(clientManager.clients[0].Id, clientManager.clients[1].Id, "Orders ID are not unical");
+            Assert.AreEqual(2, clientManager.Clients.Count, "Wrong order number");
+            Assert.AreEqual( 0, clientManager.Clients[0].Id, "Wrong order ID");
+            Assert.AreEqual(1, clientManager.Clients[1].Id, "Wrong order ID");
 
         }
 
@@ -30,16 +28,13 @@ namespace LogicUnitTests
         public void GetClientByNameTest()
         {
 
-            List<Task> tasksInProgress = new List<Task>();
             ClientManager clientManager = new ClientManager();
 
-            tasksInProgress.Add(Task.Run(() => clientManager.CreateClient("test1", "", null)));
-            tasksInProgress.Add(Task.Run(() => clientManager.CreateClient("test2", "", null)));
+            clientManager.CreateClient("test1", "", null);
+            clientManager.CreateClient("test2", "", null);
 
-            Task.WaitAll(tasksInProgress.ToArray());
-
-            Assert.AreEqual(1, clientManager.GetClientByName("test2").Id, "Wrong order number");
-          
+            Assert.AreEqual(1, clientManager.GetClientByName("test2").Id, "Wrong order ID");
+            Assert.AreEqual(0, clientManager.GetClientByName("test1").Id, "Wrong order ID");
 
         }
 

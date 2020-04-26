@@ -6,41 +6,37 @@ using System.Text;
 namespace Logic
 {
     public class MenuManager
-    {
-        private readonly object menuCriticalSection = new object();
-        private List<Dish> dishes { get;  set; } 
+    {       
+        private List<Dish> Dishes { get;  set; } 
         private int currentMenuIndex;
 
         public MenuManager()
         {
-            dishes = new List<Dish>();
+            Dishes = new List<Dish>();
             currentMenuIndex = 0;
         }
 
 
         public void AddDishToMenu(string name, string description, List<Ingredient> ingredients, Category category, double price)
         {
-            lock (menuCriticalSection)
-            {
-                Dish dish = new Dish(currentMenuIndex, name, description, ingredients, category, price);
-                dishes.Add(dish);
-                currentMenuIndex++;
-            }
+            Dish dish = new Dish(currentMenuIndex, name, description, ingredients, category, price);
+            Dishes.Add(dish);
+            currentMenuIndex++;           
         }
 
         public List<Dish> GetMenu()
         {
-            return dishes;
+            return Dishes;
         }
 
         public Dish GetDishById(int Id)
         {
-            return dishes.Find(x => x.Id == Id);
+            return Dishes.Find(x => x.Id == Id);
         }
 
         public Dish GetDishByName(string Name)
         {
-            return dishes.Find(x => x.Name == Name);
+            return Dishes.Find(x => x.Name == Name);
 
         }
 
