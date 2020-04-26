@@ -45,15 +45,19 @@ namespace Logic
             return new Unsubscriber(observers, observer);
         }
 
-        public void SendRaport()
+        public void SendReport()
         {
-            DateTime sendReportDate = DateTime.Now;
-            IncomeReport report = restaurantManager.GenerateIncomeReport(lastReportDate, sendReportDate);
-            foreach (var observer in observers)
-                observer.OnNext(report);
-            lastReportDate = sendReportDate;
+            while(true)
+            {
+                DateTime sendReportDate = DateTime.Now;
+                IncomeReport report = restaurantManager.GenerateIncomeReport(lastReportDate, sendReportDate);
+                foreach (var observer in observers)
+                    observer.OnNext(report);
+                lastReportDate = sendReportDate;
 
-            System.Threading.Thread.Sleep(intervalToSendReport);
+                System.Threading.Thread.Sleep(intervalToSendReport);
+            }
+            
         }
         
     }

@@ -18,9 +18,9 @@ namespace Logic
             LateOrders = new List<Order>();
         }
 
-        public void CreateOrder(int currentOrderIndex, Client client, DateTime orderDate, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
+        public void CreateOrder(int currentOrderIndex, Client client, DateTime orderDate, List<Dish> dishes, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
         {           
-            Order order = new Order(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
+            Order order = new Order(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
             DeliveryOrders.Add(order);
         }
 

@@ -15,15 +15,20 @@ namespace Model
         public DateTime DeliveryEndTime { get; private set; }
         public double TotalPrice { get; private set; }
 
-        public Order(int id, Client client, DateTime orderDate, bool delivery, Address deliveryAdress , DateTime deliveryEndTime)
+        public Order(int id, Client client, DateTime orderDate, List<Dish> dishes, bool delivery, Address deliveryAdress , DateTime deliveryEndTime)
         {
             Id = id;
             Client = client;
             OrderDate = orderDate;
-            Dishes = new List<Dish>();
+            Dishes = dishes;
             Delivery = delivery;
             DeliveryAdress = deliveryAdress;
             TotalPrice = 0.0;
+            foreach (Dish dish in dishes)
+            {
+                TotalPrice += dish.Price;
+            }
+            
             DeliveryEndTime = deliveryEndTime;
         }
     }

@@ -21,16 +21,16 @@ namespace Logic
          
         }
 
-        public void CreateOrder(int currentOrderIndex,Client client, DateTime orderDate, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
+        public void CreateOrder(int currentOrderIndex,Client client, DateTime orderDate, List<Dish> dishes, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
         {            
-            Order order = new Order(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
+            Order order = new Order(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
             ActiveOrders.Add(order);       
         }
 
         public void CompleteOrder(int Id)
         {
             Order tmp = ActiveOrders.Find(x => x.Id == Id);
-            CompletedOrders.Add(new Order(tmp.Id,tmp.Client,tmp.OrderDate,tmp.Delivery,tmp.DeliveryAdress,tmp.DeliveryEndTime));
+            CompletedOrders.Add(new Order(tmp.Id,tmp.Client,tmp.OrderDate,tmp.Dishes, tmp.Delivery,tmp.DeliveryAdress,tmp.DeliveryEndTime));
             ActiveOrders.RemoveAll(x => x.Id == Id);
           
         }

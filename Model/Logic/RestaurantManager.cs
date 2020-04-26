@@ -24,12 +24,18 @@ namespace Logic
             currentOrderIndex = 0;
         }
 
+        public void AddSampleData()
+        {
+            this.CreateDish("testDish", "s", new List<Ingredient>(), Category.alcohol, 15.50);
+        }
 
-        public void CreateClient(string name, string phoneNumber, Address adress)
+
+        public void CreateClient(string name, string phoneNumber, string street, string number, string postalCode)
         {
             lock(criticalSection)
             {
-                clientManager.CreateClient(name, phoneNumber, adress);
+                Address address = new Address(street, number, postalCode);
+                clientManager.CreateClient(name, phoneNumber, address);
             }            
         }
 
@@ -41,21 +47,46 @@ namespace Logic
             }           
         }
 
-        public void CreateOrder(int currentOrderIndex, Client client, DateTime orderDate, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
+        public void CreateOrder(Client client, DateTime orderDate, List<Dish> dishes, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
         {
             lock(criticalSection)
             {
                 if (delivery)
                 {
-                    deliveryManager.CreateOrder(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
+                    deliveryManager.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
                 }
                 else
                 {
-                    orderManager.CreateOrder(currentOrderIndex, client, orderDate, delivery, deliveryAddress, deliveryEndTime);
+                    orderManager.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
                 }
                 currentOrderIndex++;
             }
            
+        }
+
+        public void CreateOrder(string clientName, DateTime orderDate, bool delivery, List<string> dishesNames, string street, string number, string postalCode, DateTime deliveryEndTime)
+        {
+            lock (criticalSection)
+            {
+                Client client = clientManager.GetClientByName(clientName);
+                Address deliveryAddress = new Address(street, number, postalCode);
+                List<Dish> dishes = new List<Dish>();
+                foreach (string dishName in dishesNames)
+                {
+                    dishes.Add(menuManager.GetDishByName(dishName));
+                }
+
+                if (delivery)
+                {
+                    deliveryManager.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
+                }
+                else
+                {
+                    orderManager.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
+                }
+                currentOrderIndex++;
+            }
+
         }
 
         public void CompleteOrder(int Id)
