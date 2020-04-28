@@ -50,8 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientManagerUnitTest.cs" />
+    <Compile Include="DeliveryManagerUnitTest.cs" />
     <Compile Include="OrderManagerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MenuManagerUnitTest.cs" />
+    <Compile Include="RestaurantManagerUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

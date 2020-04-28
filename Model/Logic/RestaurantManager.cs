@@ -149,7 +149,7 @@ namespace Logic
         {
             return deliveryManager.GetDeliveryById(Id);
         }
-        //TO DO : wysyłanie raportu niezależnie od użytkownika
+       
         public IncomeReport GenerateIncomeReport(DateTime from, DateTime to)
         {
             lock (criticalSection)

@@ -183,21 +183,33 @@ namespace ViewModel
         }
         private void CreateOrder()
         {
-            restaurantManager.CreateOrder(SelectedClient.Name, DateTime.Now, Delivery, dishesNames, "", "", "", DateTime.Now.AddHours(1));
-            Clear();
-            Delivery = false;
-            RefreshView();
+            if(SelectedClient != null)
+            {
+                restaurantManager.CreateOrder(SelectedClient.Name, DateTime.Now, Delivery, dishesNames, "", "", "", DateTime.Now.AddHours(1));
+                Clear();
+                Delivery = false;
+                RefreshView();
+            }
+           
 
         }
         private void CompleteOrder()
         {
-            restaurantManager.CompleteOrder(SelectedOrder.Id);
-            RefreshView();
+            if(SelectedOrder != null)
+            {
+                restaurantManager.CompleteOrder(SelectedOrder.Id);
+                RefreshView();
+            }
+            
         }
         private void CompleteDelivery()
         {
-            restaurantManager.CompleteDelivery(SelectedDelivery.Id);
-            RefreshView();
+            if(SelectedDelivery != null)
+            {
+                restaurantManager.CompleteDelivery(SelectedDelivery.Id);
+                RefreshView();
+            }
+           
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

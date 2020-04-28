@@ -18,7 +18,7 @@ namespace LogicUnitTests
             clientManager.CreateClient("test2", "", null);
 
             Assert.AreEqual(2, clientManager.Clients.Count, "Wrong order number");
-            Assert.AreEqual( 0, clientManager.Clients[0].Id, "Wrong order ID");
+            Assert.AreEqual(0, clientManager.Clients[0].Id, "Wrong order ID");
             Assert.AreEqual(1, clientManager.Clients[1].Id, "Wrong order ID");
 
         }
@@ -36,10 +36,6 @@ namespace LogicUnitTests
             Assert.AreEqual(0, clientManager.GetClientByName("test1").Id, "Wrong order ID");
 
         }
-
-
-
-
 
 
     }

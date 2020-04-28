@@ -6,8 +6,8 @@ using System.Text;
 namespace Logic
 {
     public class MenuManager
-    {       
-        private List<Dish> Dishes { get;  set; } 
+    {
+        private List<Dish> Dishes;
         private int currentMenuIndex;
 
         public MenuManager()

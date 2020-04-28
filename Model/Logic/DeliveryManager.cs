@@ -35,7 +35,6 @@ namespace Logic
         {
             return DeliveryOrders.Find(x => x.Id == Id);
         }
-        //TO DO: przenoszenie zamówień które przekroczyły czas dostawy do zamówień spóźnionychs
 
     }
 }
