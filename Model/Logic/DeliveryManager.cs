@@ -28,9 +28,13 @@ namespace Logic
         {
             Order tmp = DeliveryOrders.Find(x => x.Id == Id);
             DeliveryOrders.RemoveAll(x => x.Id == Id);
+            tmp.CompleteOrderDate = DateTime.Now;
             DeliveryCompleted.Add(tmp);
         }
-
+        public Order GetDeliveryById(int Id)
+        {
+            return DeliveryOrders.Find(x => x.Id == Id);
+        }
         //TO DO: przenoszenie zamówień które przekroczyły czas dostawy do zamówień spóźnionychs
 
     }

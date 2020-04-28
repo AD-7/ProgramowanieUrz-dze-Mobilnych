@@ -1,7 +1,7 @@
-﻿using Logic;
-using Model;
+﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ViewModel;
 
 namespace ViewWindow
 {
@@ -23,64 +24,88 @@ namespace ViewWindow
     /// </summary>
     public partial class MainWindow : Window
     {
-        private RestaurantManager restaurantManager;
-        private ReportReceiver reportReceiver;
-        private ReportSender reportSender;
-        private int completeOrderIndex = 0;
-        private List<string> dishesNames;
+   
+
 
         public MainWindow()
         {
-            dishesNames = new List<string>();
+           
             InitializeComponent();
-
-            restaurantManager = new RestaurantManager();
-            reportSender = new ReportSender(restaurantManager, 5000);
-            Task.Run(() => reportSender.SendReport());
-
-            reportReceiver = new ReportReceiver(reportStartDateTextBox, reportEndDateTextBox, reportIncomeTextBox);
-            reportReceiver.Subscribe(reportSender);
-
-            restaurantManager.AddSampleData();
-
-
+            DataContext = new ViewControler();
+           
         }
 
-        private void addOrderButton_Click(object sender, RoutedEventArgs e)
+        private void OpenDishWindow_Click(object sender, RoutedEventArgs e)
         {
-            restaurantManager.CreateOrder("test", DateTime.Now, false, dishesNames, "", "", "", DateTime.Now);
-            dishesNames.Clear();
-            addedDishesListBox.Items.Clear();
+            DishWindow window = new DishWindow();
+            window.DataContext = (this.DataContext as ViewControler).dishViewModel;
+            window.ShowDialog();
+            (DataContext as ViewControler).RefreshView();
         }
 
-        private void addClientButton_Click(object sender, RoutedEventArgs e)
+        private void AddClientButton_Click(object sender, RoutedEventArgs e)
         {
-            restaurantManager.CreateClient("test", "0090909", "Street", "24", "12-123");
-            
+            ClientWindow window = new ClientWindow();
+            window.DataContext = (this.DataContext as ViewControler).clientViewModel;
+            window.ShowDialog();
+            (DataContext as ViewControler).RefreshView();
         }
 
-        private void completeLastOrderButton_Click(object sender, RoutedEventArgs e)
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            restaurantManager.CompleteOrder(completeOrderIndex);
-            completeOrderIndex++;
+            (DataContext as ViewControler).RefreshOrderDishes();
         }
 
-
-        private void dishesComboBox_DropDownOpened(object sender, EventArgs e)
+        private void ListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            dishesComboBox.Items.Clear();
-            List<Dish> menu = restaurantManager.GetMenu();
-            foreach (Dish dish in menu)
-            {
-                dishesComboBox.Items.Add(dish.Name);
-            }
-            
+            (DataContext as ViewControler).RefreshDeliveryDishes();
         }
 
-        private void addAddDishToList_Click(object sender, RoutedEventArgs e)
-        {
-            dishesNames.Add((string)dishesComboBox.SelectedItem);
-            addedDishesListBox.Items.Add((string)dishesComboBox.SelectedItem);
-        }
+
+
+
+
+
+
+
+        //private void addOrderButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    restaurantManager.CreateOrder("test", DateTime.Now, false, dishesNames, "", "", "", DateTime.Now);
+        //    dishesNames.Clear();
+        //    addedDishesListView.Items.Clear();
+        //}
+
+        //private void addClientButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    restaurantManager.CreateClient("test", "0090909", "Street", "24", "12-123");
+
+
+        //}
+
+        //private void completeLastOrderButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    restaurantManager.CompleteOrder(completeOrderIndex);
+        //    completeOrderIndex++;
+        //}
+
+
+        //private void dishesComboBox_DropDownOpened(object sender, EventArgs e)
+        //{
+        //    dishesComboBox.Items.Clear();
+        //    List<Dish> menu = restaurantManager.GetMenu();
+        //    foreach (Dish dish in menu)
+        //    {
+        //        dishesComboBox.Items.Add(dish.Id);
+        //    }
+
+        //}
+
+        //private void addAddDishToList_Click(object sender, RoutedEventArgs e)
+        //{
+        //    dishesNames.Add((menuListView.SelectedItem as Dish).Name);
+        //    addedDishesListView.Items.Add((menuListView.SelectedItem as Dish));
+        //}
+
+
     }
 }

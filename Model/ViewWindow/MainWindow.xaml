@@ -5,17 +5,164 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ViewWindow"
         mc:Ignorable="d"
-        Title="Restaurant" Height="450" Width="800">
-    <Grid>
-        <TextBox x:Name="reportStartDateTextBox" HorizontalAlignment="Left" Height="23" Margin="476,44,0,0" TextWrapping="Wrap" Text="report start date" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="reportEndDateTextBox" HorizontalAlignment="Left" Height="23" Margin="476,72,0,0" TextWrapping="Wrap" Text="report end date" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="reportIncomeTextBox" HorizontalAlignment="Left" Height="23" Margin="476,100,0,0" TextWrapping="Wrap" Text="report income" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <Button x:Name="addOrderButton" Content="create order" HorizontalAlignment="Left" Margin="66,52,0,0" VerticalAlignment="Top" Width="75" Click="addOrderButton_Click" IsDefault="True"/>
-        <Button x:Name="addClientButton" Content="create client" HorizontalAlignment="Left" Margin="66,85,0,0" VerticalAlignment="Top" Width="75" Click="addClientButton_Click" IsDefault="True"/>
-        <Button x:Name="completeLastOrderButton" Content="complete last order" HorizontalAlignment="Left" Margin="66,121,0,0" VerticalAlignment="Top" Width="128" Click="completeLastOrderButton_Click" IsDefault="True"/>
-        <ComboBox x:Name="dishesComboBox" HorizontalAlignment="Left" Margin="257,119,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="dishesComboBox_DropDownOpened"/>
-        <Button x:Name="addDishToListButton" Content="add selected dish" HorizontalAlignment="Left" Margin="261,146,0,0" VerticalAlignment="Top" Width="116" Click="addAddDishToList_Click" IsDefault="True"/>
-        <ListBox x:Name="addedDishesListBox" HorizontalAlignment="Left" Height="100" Margin="496,146,0,0" VerticalAlignment="Top" Width="100"/>
+        Title="Restaurant" Height="580" Width="800"
+        >
+
+    <Grid Margin="0,0,2,12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="700*"/>
+            <ColumnDefinition Width="229*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl HorizontalAlignment="Left" Height="500" Margin="10,10,0,0" VerticalAlignment="Top" Width="770" Grid.ColumnSpan="2" >
+            <TabItem Header="Current order">
+                <Grid Background="#FFE5E5E5" Margin="0,5,-1,-58" Height="500" VerticalAlignment="Top" HorizontalAlignment="Left" Width="770">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="57*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="643*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="addOrderButton"  Content="create order" Command="{Binding createOrder}" HorizontalAlignment="Left" Margin="551,444,0,0" VerticalAlignment="Top" Width="82"  IsDefault="True" Grid.Column="2" Height="21"/>
+                    <Button x:Name="clearCard" Command="{Binding clearCard}"  Content="clear" HorizontalAlignment="Left" Margin="551,305,0,0" VerticalAlignment="Top" Width="82"  IsDefault="True" Grid.Column="2" Height="21"/>
+                    <Button x:Name="addDishToListButton" Command="{Binding addDish}" Content="add selected dish" HorizontalAlignment="Left" Margin="290,31,0,0" VerticalAlignment="Top" Width="100"  IsDefault="True" Grid.Column="2" Height="18"/>
+                    <Button x:Name="openDishWindow" Content="create new dish" HorizontalAlignment="Left" Margin="22,31,0,0" VerticalAlignment="Top" Width="100"  IsDefault="True" Height="18" Grid.ColumnSpan="3" Click="OpenDishWindow_Click" />
+                    <ListView x:Name="addedDishesListView" ItemsSource="{Binding Card}" HorizontalAlignment="Left" Height="246" Margin="409,54,0,0" VerticalAlignment="Top" Width="224" Grid.Column="2">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="130"/>
+                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="80"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Label Content="Menu" FontSize="25" FontWeight="Bold" FontStyle="Italic" FontFamily="Arial" Grid.Column="2" HorizontalAlignment="Left" Margin="125,10,0,0" VerticalAlignment="Top"/>
+                    <ListView x:Name="menuListView" ItemsSource="{Binding Menu}" SelectedItem="{Binding SelectedDish}" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="411" Margin="22,54,0,0" VerticalAlignment="Top" Width="445">
+                        <ListView.View >
+
+                            <GridView >
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="150"   />
+                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Path=Category}" Width="110"  />
+                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}" Width="80"  />
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                    <CheckBox Content="delivery" IsChecked="{Binding Path=Delivery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" HorizontalAlignment="Left" Margin="409,380,0,0" VerticalAlignment="Top"/>
+                    <ComboBox ItemsSource="{Binding Clients}" SelectedItem="{Binding Path=SelectedClient}"   DisplayMemberPath="Name" Grid.Column="2" HorizontalAlignment="Left" Margin="409,353,0,0" VerticalAlignment="Top" Width="120">
+
+                    </ComboBox>
+                    <Label Content="Client:" Grid.Column="2" HorizontalAlignment="Left" Margin="409,327,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.349,0.769"/>
+                    <Button x:Name="addClientButton" Command="{Binding addClient}" Content="create client" HorizontalAlignment="Left" Margin="551,355,0,0" VerticalAlignment="Top" Width="75"  IsDefault="True" Grid.Column="2" Click="AddClientButton_Click"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Orders" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+                <Grid Background="#FFE5E5E5" HorizontalAlignment="Left" Width="771">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="59*"/>
+                        <ColumnDefinition Width="198*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Active orders" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <ListView HorizontalAlignment="Left" ItemsSource="{Binding ActiveOrders}" SelectedItem="{Binding SelectedOrder}" SelectionChanged="ListView_SelectionChanged"  Height="305" Margin="10,65,0,0" VerticalAlignment="Top" Width="467" Grid.ColumnSpan="2">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Numer" DisplayMemberBinding="{Binding Path=Id}" Width="70"  />
+                                <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Path=OrderDate}" Width="130"   />
+                                <GridViewColumn Header="Client" DisplayMemberBinding="{Binding Path=Client.Name}" Width="120"   />
+                                <GridViewColumn Header="Total price" DisplayMemberBinding="{Binding Path=TotalPrice}" Width="110"   />
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Grid.Column="1" ItemsSource="{Binding CurrentOrderDisplayDishes}" HorizontalAlignment="Left" Height="305" Margin="319,65,0,0" VerticalAlignment="Top" Width="265">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="90"   />
+                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Path=Category}" Width="80"  />
+                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}" Width="60"  />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.ColumnSpan="2" Command="{Binding completeOrder}" Content="Complete selected order" HorizontalAlignment="Left" Margin="157,385,0,0" VerticalAlignment="Top" Width="150"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Completed orders" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="108">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="672*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Completed orders" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+                    <ListView HorizontalAlignment="Left" ItemsSource="{Binding CompletedOrders}" Height="397" Margin="10,65,0,0" VerticalAlignment="Top" Width="751" Grid.ColumnSpan="3">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Numer" DisplayMemberBinding="{Binding Path=Id}" Width="70"  />
+                                <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Path=OrderDate}" Width="130"   />
+                                <GridViewColumn Header="Complete date" DisplayMemberBinding="{Binding Path=CompleteOrderDate}" Width="130"   />
+                                <GridViewColumn Header="Client" DisplayMemberBinding="{Binding Path=Client.Name}" Width="120"   />
+                                <GridViewColumn Header="Total price" DisplayMemberBinding="{Binding Path=TotalPrice}" Width="110"   />
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Delivery" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54" Margin="-2,-2,0,0">
+                <Grid Background="#FFE5E5E5" HorizontalAlignment="Left" Width="771" Margin="0,0,-7,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="59*"/>
+                        <ColumnDefinition Width="198*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Active deliveries" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <ListView HorizontalAlignment="Left" ItemsSource="{Binding ActiveDelivery}" SelectedItem="{Binding SelectedDelivery}" SelectionChanged="ListView_SelectionChanged_1"  Height="305" Margin="0,65,0,0" VerticalAlignment="Top" Width="617" Grid.ColumnSpan="2">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Numer" DisplayMemberBinding="{Binding Id}" Width="50"  />
+                                <GridViewColumn Header="Date" DisplayMemberBinding="{Binding OrderDate}" Width="120"   />
+                                <GridViewColumn Header="End date" DisplayMemberBinding="{Binding DeliveryEndTime}" Width="120"   />
+                                <GridViewColumn Header="Client" DisplayMemberBinding="{Binding Client.Name}" Width="100"   />
+                                <GridViewColumn Header="Street" DisplayMemberBinding="{Binding Client.Adress.Street}" Width="80"   />
+                                <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Client.Adress.Number}" Width="50"   />
+
+                                <GridViewColumn Header="Total price" DisplayMemberBinding="{Binding TotalPrice}" Width="80"   />
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Grid.Column="1" ItemsSource="{Binding CurrentDeliveryDisplayDishes}" HorizontalAlignment="Left" Height="305" Margin="445,65,0,0" VerticalAlignment="Top" Width="139">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="70"   />
+
+                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="60"  />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Command="{Binding completeDelivery}" Content="Complete selected delivery" HorizontalAlignment="Left" Margin="60,375,0,0" VerticalAlignment="Top" Width="150" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Completed deliveries" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="108" Margin="-2,-2,0,0">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="672*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Completed deliveries" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+                    <ListView HorizontalAlignment="Left" ItemsSource="{Binding CompletedDeliveries}" Height="397" Margin="10,65,0,0" VerticalAlignment="Top" Width="751" Grid.ColumnSpan="3">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Numer" DisplayMemberBinding="{Binding Id}" Width="70"  />
+                                <GridViewColumn Header="Date" DisplayMemberBinding="{Binding OrderDate}" Width="130"   />
+                                <GridViewColumn Header="Complete date" DisplayMemberBinding="{Binding CompleteOrderDate}" Width="130"   />
+                                <GridViewColumn Header="Client" DisplayMemberBinding="{Binding Client.Name}" Width="120"   />
+                                <GridViewColumn Header="Total price" DisplayMemberBinding="{Binding TotalPrice}" Width="110"   />
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

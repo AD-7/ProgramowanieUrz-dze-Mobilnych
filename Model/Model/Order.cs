@@ -9,6 +9,7 @@ namespace Model
         public int Id { get; private set; }
         public Client Client { get; private set; }
         public DateTime OrderDate { get; private set; }
+        public DateTime CompleteOrderDate { get;  set; }
         public List<Dish> Dishes { get; private set; }
         public bool Delivery { get; private set; }
         public Address DeliveryAdress { get; private set; }

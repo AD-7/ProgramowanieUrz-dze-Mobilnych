@@ -16,8 +16,8 @@ namespace LogicUnitTests
             List<Task> tasksInProgress = new List<Task>();
             
             OrderManager orderManager = new OrderManager();
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now,null, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now,null, false, null, DateTime.Now.AddHours(1))));
 
             Task.WaitAll(tasksInProgress.ToArray());
             Assert.AreEqual(2, orderManager.ActiveOrders.Count, "Wrong order number");
@@ -31,9 +31,9 @@ namespace LogicUnitTests
             List<Task> tasksInProgress = new List<Task>();
 
             OrderManager orderManager = new OrderManager();
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(2,null, DateTime.Now, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now,null, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now,null, false, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(2,null, DateTime.Now,null, false, null, DateTime.Now.AddHours(1))));
             
             Task.WaitAll(tasksInProgress.ToArray());
 
@@ -54,8 +54,8 @@ namespace LogicUnitTests
             List<Task> tasksInProgress = new List<Task>();
 
             OrderManager orderManager = new OrderManager();
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now, false, null,DateTime.Now.AddHours(1))));
-            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now, true, null, DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(0,null, DateTime.Now,null, false, null,DateTime.Now.AddHours(1))));
+            tasksInProgress.Add(Task.Run(() => orderManager.CreateOrder(1,null, DateTime.Now,null, true, null, DateTime.Now.AddHours(1))));
             Task.WaitAll(tasksInProgress.ToArray());
 
             tasksInProgress.Add(Task.Run(() => orderManager.CompleteOrder(1)));

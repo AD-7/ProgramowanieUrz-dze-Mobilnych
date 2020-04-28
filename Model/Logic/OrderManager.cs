@@ -31,6 +31,7 @@ namespace Logic
         {
             Order tmp = ActiveOrders.Find(x => x.Id == Id);
             CompletedOrders.Add(new Order(tmp.Id,tmp.Client,tmp.OrderDate, tmp.Dishes, tmp.Delivery,tmp.DeliveryAdress,tmp.DeliveryEndTime));
+            CompletedOrders[CompletedOrders.Count - 1].CompleteOrderDate = DateTime.Now;
             ActiveOrders.RemoveAll(x => x.Id == Id);
           
         }
