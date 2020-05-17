@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Logic;
-using Model;
+using Dane;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -15,8 +15,8 @@ namespace LogicUnitTests
         {
                        
             OrderManager orderManager = new OrderManager();
-            orderManager.CreateOrder(0,null, DateTime.Now, new List<Dish>(), false, null, DateTime.Now.AddHours(1));
-            orderManager.CreateOrder(1,null, DateTime.Now, new List<Dish>(), false, null, DateTime.Now.AddHours(1));
+            orderManager.CreateOrder(0,null, DateTime.Now, new List<DishDTG>(), false, null, DateTime.Now.AddHours(1));
+            orderManager.CreateOrder(1,null, DateTime.Now, new List<DishDTG>(), false, null, DateTime.Now.AddHours(1));
 
             Assert.AreEqual(2, orderManager.ActiveOrders.Count, "Wrong order number");
             Assert.AreNotEqual(orderManager.ActiveOrders[0].Id, orderManager.ActiveOrders[1].Id, "Orders ID are not unical");
@@ -28,9 +28,9 @@ namespace LogicUnitTests
         {
 
             OrderManager orderManager = new OrderManager();
-            orderManager.CreateOrder(0,null, DateTime.Now, new List<Dish>(), false, null, DateTime.Now.AddHours(1));
-            orderManager.CreateOrder(1,null, DateTime.Now, new List<Dish>(), false, null, DateTime.Now.AddHours(1));
-            orderManager.CreateOrder(2,null, DateTime.Now, new List<Dish>(), false, null, DateTime.Now.AddHours(1));
+            orderManager.CreateOrder(0,null, DateTime.Now, new List<DishDTG>(), false, null, DateTime.Now.AddHours(1));
+            orderManager.CreateOrder(1,null, DateTime.Now, new List<DishDTG>(), false, null, DateTime.Now.AddHours(1));
+            orderManager.CreateOrder(2,null, DateTime.Now, new List<DishDTG>(), false, null, DateTime.Now.AddHours(1));
             
             orderManager.CompleteOrder(1);
 
@@ -45,8 +45,8 @@ namespace LogicUnitTests
         {
            
             OrderManager orderManager = new OrderManager();
-            orderManager.CreateOrder(0,null, DateTime.Now, new List<Dish>(), false, null,DateTime.Now.AddHours(1));
-            orderManager.CreateOrder(1,null, DateTime.Now, new List<Dish>(), true, null, DateTime.Now.AddHours(1));
+            orderManager.CreateOrder(0,null, DateTime.Now, new List<DishDTG>(), false, null,DateTime.Now.AddHours(1));
+            orderManager.CreateOrder(1,null, DateTime.Now, new List<DishDTG>(), true, null, DateTime.Now.AddHours(1));
 
             orderManager.CompleteOrder(1);
 

@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Dane;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,9 +18,15 @@ namespace Logic
             LateOrders = new List<Order>();
         }
 
-        public void CreateOrder(int currentOrderIndex, Client client, DateTime orderDate, List<Dish> dishes, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
-        {           
-            Order order = new Order(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
+        public void CreateOrder(int currentOrderIndex, Client client, DateTime orderDate, List<DishDTG> dishes, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
+        {
+            List<Dish> dataDishes = new List<Dish>();
+            foreach (DishDTG dtg in dishes)
+            {
+                int cat = Convert.ToInt32(dtg.Category);
+                dataDishes.Add(new Dish(dtg.Id, dtg.Name, dtg.Description, null, (Category)cat, dtg.Price));
+            }
+            Order order = new Order(currentOrderIndex, client, orderDate, dataDishes, delivery, deliveryAddress, deliveryEndTime);
             DeliveryOrders.Add(order);
         }
 

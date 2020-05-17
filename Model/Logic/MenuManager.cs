@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Dane;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,9 +17,9 @@ namespace Logic
         }
 
 
-        public void AddDishToMenu(string name, string description, List<Ingredient> ingredients, Category category, double price)
+        public void AddDishToMenu(string name, string description, List<Ingredient> ingredients, CategoryDTG category, double price)
         {
-            Dish dish = new Dish(currentMenuIndex, name, description, ingredients, category, price);
+            Dish dish = new Dish(currentMenuIndex, name, description, ingredients, (Category)Convert.ToInt32(category), price);
             Dishes.Add(dish);
             currentMenuIndex++;           
         }

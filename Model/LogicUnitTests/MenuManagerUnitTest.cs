@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model;
+using Dane;
 
 namespace LogicUnitTests
 {
@@ -13,7 +13,7 @@ namespace LogicUnitTests
         public void AddDishToMenuTest()
         {
             MenuManager menuManager = new MenuManager();
-            List<Dish> menu = menuManager.GetMenu();
+            List<DishDTG> menu = menuManager.GetMenu();
             Assert.AreEqual(0, menu.Count, "Wrong dishes number");
 
             List<Ingredient> ingredients = new List<Ingredient>();
@@ -31,7 +31,7 @@ namespace LogicUnitTests
         public void GetDishByNameTest()
         {
             MenuManager menuManager = new MenuManager();
-            List<Dish> menu = menuManager.GetMenu();
+            List<DishDTG> menu = menuManager.GetMenu();
 
             List<Ingredient> ingredients = new List<Ingredient>();
             menuManager.AddDishToMenu("testDish", "Description", ingredients, Category.alcohol, 15.67);

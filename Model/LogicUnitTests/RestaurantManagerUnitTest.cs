@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model;
+using Dane;
 
 namespace LogicUnitTests
 {
@@ -21,7 +21,7 @@ namespace LogicUnitTests
             dishesNames.Add("testDish");
             dishesNames.Add("testDish2");
             dishesNames.Add("testDish");
-            Client client = new Client(1, "Jan Kowalski", "", null);
+            ClientDTG client = new ClientDTG(1, "Jan Kowalski", "", null);
 
             restaurantManager.CreateOrder("Jan Kowalski", DateTime.Now, false, dishesNames, "", "", "", DateTime.Now.AddHours(1));
             Assert.AreEqual(1, restaurantManager.GetActiveOrders().Count, "Wrong number of active orders");

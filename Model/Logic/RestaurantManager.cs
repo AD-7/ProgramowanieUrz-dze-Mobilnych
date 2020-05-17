@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Dane;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,10 +26,10 @@ namespace Logic
 
         public void AddSampleData()
         {
-            this.CreateDish("testDish", "s", new List<Ingredient>(), Category.alcohol, 15.50);
-            this.CreateDish("testDish1", "s", new List<Ingredient>(), Category.alcohol, 12.50);
-            this.CreateDish("testDish2", "s", new List<Ingredient>(), Category.alcohol, 8.50);
-            this.CreateDish("testDish3", "s", new List<Ingredient>(), Category.alcohol, 5.50);
+            this.CreateDish("testDish", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 15.50);
+            this.CreateDish("testDish1", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 12.50);
+            this.CreateDish("testDish2", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 8.50);
+            this.CreateDish("testDish3", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 5.50);
             this.CreateClient("Imie Nazwisko", "606060606", "", "", "");
         }
 
@@ -43,25 +43,35 @@ namespace Logic
             }
         }
 
-        public void CreateDish(string name, string description, List<Ingredient> ingredients, Category category, double price)
+        public void CreateDish(string name, string description, List<IngredientDTG> ingredients, CategoryDTG category, double price)
         {
             lock (criticalSection)
             {
-                menuManager.AddDishToMenu(name, description, ingredients, category, price);
+                
+                List<Ingredient> ingredientss = new List<Ingredient>();
+                if (ingredients != null)
+                {
+                    foreach (IngredientDTG dtg in ingredients)
+                    {
+                        ingredientss.Add(new Ingredient(new Product(dtg.Product.Id, dtg.Product.Name), dtg.Quantity));
+                    }
+                }
+                menuManager.AddDishToMenu(name, description, ingredientss, category, price);
             }
         }
 
-        public void CreateOrder(Client client, DateTime orderDate, List<Dish> dishes, bool delivery, Address deliveryAddress, DateTime deliveryEndTime)
+        public void CreateOrder(ClientDTG client, DateTime orderDate, List<DishDTG> dishes, bool delivery, AddressDTG deliveryAddress, DateTime deliveryEndTime)
         {
             lock (criticalSection)
             {
+                Client tmp = new Client(client.Id, client.Name, client.PhoneNumber, new Address(client.Adress.Street, client.Adress.Number, client.Adress.PostalCode));
                 if (delivery)
                 {
-                    deliveryManager.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
+                    deliveryManager.CreateOrder(currentOrderIndex, tmp, orderDate, dishes, delivery, new Address(deliveryAddress.Street,deliveryAddress.Number,deliveryAddress.PostalCode), deliveryEndTime);
                 }
                 else
                 {
-                    orderManager.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
+                    orderManager.CreateOrder(currentOrderIndex, tmp, orderDate, dishes, delivery, new Address(deliveryAddress.Street, deliveryAddress.Number, deliveryAddress.PostalCode), deliveryEndTime);
                 }
                 currentOrderIndex++;
             }
@@ -74,10 +84,11 @@ namespace Logic
             {
                 Client client = clientManager.GetClientByName(clientName);
                 Address deliveryAddress = new Address(street, number, postalCode);
-                List<Dish> dishes = new List<Dish>();
+                List<DishDTG> dishes = new List<DishDTG>();
+                
                 foreach (string dishName in dishesNames)
                 {
-                    dishes.Add(menuManager.GetDishByName(dishName));
+                    dishes.Add(MapperToDTG.DishDTG( menuManager.GetDishByName(dishName)));
                 }
 
                 if (delivery)
@@ -110,44 +121,44 @@ namespace Logic
             }
         }
 
-        public List<Dish> GetMenu()
+        public List<DishDTG> GetMenu()
         {
-            return menuManager.GetMenu();
+            return MapperToDTG.DishDTGs( menuManager.GetMenu());
         }
 
-        public List<Order> GetActiveOrders()
+        public List<OrderDTG> GetActiveOrders()
         {
-            return orderManager.ActiveOrders;
+            return MapperToDTG.OrderDTGs(orderManager.ActiveOrders);
         }
 
-        public List<Order> GetActiveDeliveries()
+        public List<OrderDTG> GetActiveDeliveries()
         {
-            return deliveryManager.DeliveryOrders;
+            return MapperToDTG.OrderDTGs(deliveryManager.DeliveryOrders);
         }
-        public List<Order> GetCompletedDeliveries()
+        public List<OrderDTG> GetCompletedDeliveries()
         {
-            return deliveryManager.DeliveryCompleted;
+            return MapperToDTG.OrderDTGs(deliveryManager.DeliveryCompleted);
         }
-        public List<Order> GetCompletedOrders()
+        public List<OrderDTG> GetCompletedOrders()
         {
-            return orderManager.CompletedOrders;
+            return MapperToDTG.OrderDTGs(orderManager.CompletedOrders);
         }
 
-        public Dish GetDishById(int Id)
+        public DishDTG GetDishById(int Id)
         {
-            return menuManager.GetDishById(Id);
+            return MapperToDTG.DishDTG(menuManager.GetDishById(Id));
         }
-        public List<Client> GetAllClients()
+        public List<ClientDTG> GetAllClients()
         {
-            return clientManager.Clients;
+            return MapperToDTG.ClientDTGs(clientManager.Clients);
         }
-        public Order GetOrderById(int Id)
+        public OrderDTG GetOrderById(int Id)
         {
-            return orderManager.GetActiveOrderById(Id);
+            return MapperToDTG.OrderDTG(orderManager.GetActiveOrderById(Id));
         }
-        public Order GetDeliveryById(int Id)
+        public OrderDTG GetDeliveryById(int Id)
         {
-            return deliveryManager.GetDeliveryById(Id);
+            return MapperToDTG.OrderDTG(deliveryManager.GetDeliveryById(Id));
         }
        
         public IncomeReport GenerateIncomeReport(DateTime from, DateTime to)
