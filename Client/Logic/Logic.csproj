@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Console\ConsoleApp.csproj" />
+    <ProjectReference Include="..\Model\Dane.csproj" />
+  </ItemGroup>
+
+</Project>
