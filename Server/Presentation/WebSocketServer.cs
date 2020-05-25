@@ -67,7 +67,7 @@ namespace Presentation
 
             private void ServerMessageLoop(WebSocket ws)
             {
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[16384];
                 while (true)
                 {
                     ArraySegment<byte> _segments = new ArraySegment<byte>(buffer);
@@ -92,6 +92,7 @@ namespace Presentation
                         count += _receiveResult.Count;
                     }
                     string _message = Encoding.UTF8.GetString(buffer, 0, count);
+                  
                     onMessage?.Invoke(_message);
                 }
             }

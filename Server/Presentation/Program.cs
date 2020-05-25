@@ -21,13 +21,14 @@ namespace Presentation
         {
             Console.WriteLine("Test");
         }
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             RestaurantManager restaurantManager = new RestaurantManager();
             restaurantManager.AddSampleData();
             XmlSerializer xmlSerializer = new XmlSerializer(restaurantManager.GetType());
 
             RestaurantManager restaurant = new RestaurantManager();
+            restaurant.AddSampleData();
             API api = new API(restaurant);
             
             TcpListener l = new TcpListener(IPAddress.Loopback, 0);
@@ -37,16 +38,20 @@ namespace Presentation
             Console.WriteLine("Port: " + port);
             Action<WebSocketConnection> action = api.HandleConnectedClient;
             WebSocketServer.Server(port, action);
-            
+
             while (true)
             {
-                if(socketConnection != null)
+
+
+                if (socketConnection != null)
                 {
-                    //Console.WriteLine("Sending...");
-                   // await socketConnection.SendAsync(serialized);
+                    Console.WriteLine("Sending...");
+                    await socketConnection.SendAsync("aa");
                 }
-                
+
             }
         }
+
+        
     }
 }

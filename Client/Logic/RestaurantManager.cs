@@ -1,25 +1,27 @@
-﻿using ConsoleApp;
+﻿
 using Dane;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Logic
 {
     public class RestaurantManager
-    {       
+    {
         private API api;
-       
+
         private int currentOrderIndex;
 
         public RestaurantManager()
-        {            
+        {
             currentOrderIndex = 0;
-            ConnectAsync();
+            Task.WaitAll(Task.Run(() => ConnectAsync()));
+
         }
 
         public RestaurantManager(API api)
-        {            
+        {
             currentOrderIndex = 0;
             this.api = api;
         }
@@ -51,17 +53,17 @@ namespace Logic
 
         public void CreateClient(string name, string phoneNumber, string street, string number, string postalCode)
         {
-            if(api != null)
+            if (api != null)
             {
                 Address address = new Address(street, number, postalCode);
                 api.CreateClient(name, phoneNumber, address);
             }
-                
+
         }
 
         public void CreateDish(string name, string description, List<IngredientDTG> ingredients, CategoryDTG category, double price)
         {
-            if(api != null)
+            if (api != null)
             {
                 List<Ingredient> ingredientss = new List<Ingredient>();
                 if (ingredients != null)
@@ -74,8 +76,8 @@ namespace Logic
 
                 api.AddDishToMenu(name, description, ingredientss, (int)category, price);
             }
-            
-            
+
+
         }
 
         /*public void CreateOrder(ClientDTG client, DateTime orderDate, List<DishDTG> dishes, bool delivery, AddressDTG deliveryAddress, DateTime deliveryEndTime)
@@ -96,72 +98,74 @@ namespace Logic
 
         public void CreateOrder(string clientName, DateTime orderDate, bool delivery, List<string> dishesNames, string street, string number, string postalCode, DateTime deliveryEndTime)
         {
-            if(api != null)
+            if (api != null)
             {
-                Client client = api.GetClientByName(clientName);
+                // Client client = api.GetClientByName(clientName);
                 Address deliveryAddress = new Address(street, number, postalCode);
                 List<Dish> dishes = new List<Dish>();
-
+                string dishesstr = "";
                 foreach (string dishName in dishesNames)
                 {
-                    dishes.Add(api.GetDishByName(dishName));
+                    //   dishes.Add(api.GetDishByName(dishName));
+                    dishesstr += dishName + ",";
                 }
-
-                if (delivery)
-                {
-                    api.CreateDelivery(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
-                }
-                else
-                {
-                    api.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
-                }
-            }                
+                dishesstr = dishesstr.TrimEnd(',');
+                //if (delivery)
+                //{
+                //    api.CreateOrder(currentOrderIndex, client, orderDate, dishes, delivery, deliveryAddress, deliveryEndTime);
+                //}
+                //else
+                //{
+                api.CreateOrder(currentOrderIndex, clientName, orderDate, dishesstr, delivery, deliveryAddress, deliveryEndTime);
+                //}
+            }
         }
 
         public void CompleteOrder(int Id)
         {
-            if(api != null)
-             api.CompleteOrder(Id);           
+            if (api != null)
+                api.CompleteOrder(Id);
         }
 
         public void CompleteDelivery(int Id)
         {
-            if(api != null)
-            api.CompleteDelivery(Id);
+            if (api != null)
+                api.CompleteDelivery(Id);
         }
 
         public List<DishDTG> GetMenu()
         {
-            if(api != null)
+            if (api != null)
             {
-                return MapperToDTG.DishDTGs(api.GetMenu().Dishes);
+                return api.GetMenu();
             }
+
             return new List<DishDTG>();
         }
 
         public List<OrderDTG> GetActiveOrders()
         {
             if (api != null)
-                return MapperToDTG.OrderDTGs(api.GetActiveOrders());
+                return api.GetActiveOrders();
             return new List<OrderDTG>();
         }
 
         public List<OrderDTG> GetActiveDeliveries()
         {
             if (api != null)
-                return MapperToDTG.OrderDTGs(api.GetActiveOrders());
+                return api.GetActiveDeliveries();
             return new List<OrderDTG>();
         }
         public List<OrderDTG> GetCompletedDeliveries()
         {
             if (api != null)
-                return MapperToDTG.OrderDTGs(api.GetCompletedDeliveries());
+                return api.GetCompletedDeliveries();
             return new List<OrderDTG>();
         }
         public List<OrderDTG> GetCompletedOrders()
         {
             if (api != null)
-                return MapperToDTG.OrderDTGs(api.GetCompletedOrders());
+                return api.GetCompletedOrders();
             return new List<OrderDTG>();
         }
 
@@ -174,23 +178,23 @@ namespace Logic
         public List<ClientDTG> GetAllClients()
         {
             if (api != null)
-                return MapperToDTG.ClientDTGs(api.GetAllClients());
+                return api.GetAllClients();
             return new List<ClientDTG>();
         }
         public OrderDTG GetOrderById(int Id)
         {
             if (api != null)
-                return MapperToDTG.OrderDTG(api.GetActiveOrderById(Id));
+                return api.GetActiveOrderById(Id);
             return new OrderDTG();
 
         }
         public OrderDTG GetDeliveryById(int Id)
         {
             if (api != null)
-                return MapperToDTG.OrderDTG(api.GetDeliveryById(Id));
+                return api.GetDeliveryById(Id);
             return new OrderDTG();
         }
-       
+
         public IncomeReport GenerateIncomeReport(DateTime from, DateTime to)
         {
             /* lock (criticalSection)

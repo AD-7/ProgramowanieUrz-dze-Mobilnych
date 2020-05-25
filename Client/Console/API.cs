@@ -26,7 +26,7 @@ namespace ConsoleApp
         {
 
             this.socketConnection = socketConnection;
-            socketConnection.onMessage = HandleMessage;
+            this.socketConnection.onMessage = HandleMessage;
         }
 
         public API()

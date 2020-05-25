@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ConsoleApp.API;
 
 namespace ConsoleApp
 {
@@ -21,7 +22,7 @@ namespace ConsoleApp
             socketConnection.onMessage = LogToConsole;
             API api = new API(socketConnection);
             //api.GetMenuFromServer();
-            //await socketConnection.SendAsync("Hello world");
+            await socketConnection.SendAsync("GET_MENU_REQ");
             while (true)
             {
                 //
