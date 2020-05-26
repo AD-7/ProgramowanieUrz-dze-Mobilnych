@@ -31,10 +31,11 @@ namespace Logic
             this.CreateDish("testDish2", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 8.50);
             this.CreateDish("testDish3", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 5.50);
             this.CreateClient("Imie Nazwisko", "606060606", "", "", "");
+          
         }
 
 
-        public void CreateClient(string name, string phoneNumber, string street, string number, string postalCode)
+        public void CreateClient(string name, string phoneNumber, string street, string number, string postalCode)  // done
         {
             lock (criticalSection)
             {
@@ -43,7 +44,7 @@ namespace Logic
             }
         }
 
-        public void CreateDish(string name, string description, List<IngredientDTG> ingredients, CategoryDTG category, double price)
+        public void CreateDish(string name, string description, List<IngredientDTG> ingredients, CategoryDTG category, double price) //done
         {
             lock (criticalSection)
             {
@@ -60,7 +61,7 @@ namespace Logic
             }
         }
 
-        public void CreateOrder(ClientDTG client, DateTime orderDate, List<DishDTG> dishes, bool delivery, AddressDTG deliveryAddress, DateTime deliveryEndTime)
+        public void CreateOrder(ClientDTG client, DateTime orderDate, List<DishDTG> dishes, bool delivery, AddressDTG deliveryAddress, DateTime deliveryEndTime)   
         {
             lock (criticalSection)
             {
@@ -121,25 +122,26 @@ namespace Logic
             }
         }
 
-        public List<DishDTG> GetMenu()
+        public List<DishDTG> GetMenu()    //done
         {
+
             return MapperToDTG.DishDTGs( menuManager.GetMenu());
         }
 
-        public List<OrderDTG> GetActiveOrders()
+        public List<OrderDTG> GetActiveOrders()  //done
         {
             return MapperToDTG.OrderDTGs(orderManager.ActiveOrders);
         }
 
-        public List<OrderDTG> GetActiveDeliveries()
+        public List<OrderDTG> GetActiveDeliveries() //done
         {
             return MapperToDTG.OrderDTGs(deliveryManager.DeliveryOrders);
         }
-        public List<OrderDTG> GetCompletedDeliveries()
+        public List<OrderDTG> GetCompletedDeliveries() //done
         {
             return MapperToDTG.OrderDTGs(deliveryManager.DeliveryCompleted);
         }
-        public List<OrderDTG> GetCompletedOrders()
+        public List<OrderDTG> GetCompletedOrders()   //done
         {
             return MapperToDTG.OrderDTGs(orderManager.CompletedOrders);
         }
@@ -148,15 +150,15 @@ namespace Logic
         {
             return MapperToDTG.DishDTG(menuManager.GetDishById(Id));
         }
-        public List<ClientDTG> GetAllClients()
+        public List<ClientDTG> GetAllClients()    //done
         {
             return MapperToDTG.ClientDTGs(clientManager.Clients);
         }
-        public OrderDTG GetOrderById(int Id)
+        public OrderDTG GetOrderById(int Id)//done
         {
             return MapperToDTG.OrderDTG(orderManager.GetActiveOrderById(Id));
         }
-        public OrderDTG GetDeliveryById(int Id)
+        public OrderDTG GetDeliveryById(int Id)//done
         {
             return MapperToDTG.OrderDTG(deliveryManager.GetDeliveryById(Id));
         }
