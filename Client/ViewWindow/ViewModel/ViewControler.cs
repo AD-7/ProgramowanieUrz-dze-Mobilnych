@@ -18,7 +18,6 @@ namespace ViewModel
 
         private RestaurantManager restaurantManager;
         private ReportReceiver reportReceiver;
-        private ReportSender reportSender;
         private string startReportDate { get; set; }
         private string endReportDate { get; set; }
         private string reportIncome { get; set; }
@@ -71,6 +70,7 @@ namespace ViewModel
         {
 
             restaurantManager = new RestaurantManager();
+            
             dishViewModel = new DishViewModel(restaurantManager);
             clientViewModel = new ClientViewModel(restaurantManager);
             //restaurantManager.AddSampleData();
@@ -86,11 +86,10 @@ namespace ViewModel
             CurrentDeliveryDisplayDishes = new ObservableCollection<DishModel>();
 
 
-            reportSender = new ReportSender(restaurantManager, 15000);
-            Task.Run(() => reportSender.SendReport());
+           
 
-            reportReceiver = new ReportReceiver(startReportDate, endReportDate, reportIncome);
-            reportReceiver.Subscribe(reportSender);
+            reportReceiver = new ReportReceiver();
+            reportReceiver.Subscribe(restaurantManager.getReportSender());
 
             addDish = new DelegateCommand(addDishToCard);
             clearCard = new DelegateCommand(Clear);

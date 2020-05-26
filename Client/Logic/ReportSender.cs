@@ -5,28 +5,22 @@ using System.Text;
 
 namespace Logic
 {
-    public class ReportSender : IObservable<IncomeReport>
+    public class ReportSender : IObservable<String>
     {
-        private List<IObserver<IncomeReport>> observers;
-        private int intervalToSendReport;
-        private RestaurantManager restaurantManager;
-        private DateTime lastReportDate;
+        private List<IObserver<String>> observers;
         
 
-        public ReportSender(RestaurantManager restaurantManager, int intervalToSendReport)
+        public ReportSender()
         {
-            observers = new List<IObserver<IncomeReport>>();
-            this.restaurantManager = restaurantManager;
-            this.intervalToSendReport = intervalToSendReport;
-            lastReportDate = DateTime.Now;
+            observers = new List<IObserver<String>>();
         }
 
         private class Unsubscriber : IDisposable
         {
-            private List<IObserver<IncomeReport>> _observers;
-            private IObserver<IncomeReport> _observer;
+            private List<IObserver<String>> _observers;
+            private IObserver<String> _observer;
 
-            public Unsubscriber(List<IObserver<IncomeReport>> observers, IObserver<IncomeReport> observer)
+            public Unsubscriber(List<IObserver<String>> observers, IObserver<String> observer)
             {
                 this._observers = observers;
                 this._observer = observer;
@@ -37,7 +31,7 @@ namespace Logic
                 if (!(_observer == null)) _observers.Remove(_observer);
             }
         }
-        public IDisposable Subscribe(IObserver<IncomeReport> observer)
+        public IDisposable Subscribe(IObserver<String> observer)
         {
             if (!observers.Contains(observer))
                 observers.Add(observer);
@@ -45,18 +39,10 @@ namespace Logic
             return new Unsubscriber(observers, observer);
         }
 
-        public void SendReport()
-        {
-            while(true)
-            {
-                DateTime sendReportDate = DateTime.Now;
-                IncomeReport report = restaurantManager.GenerateIncomeReport(lastReportDate, sendReportDate);
-                foreach (var observer in observers)
-                    observer.OnNext(report);
-                lastReportDate = sendReportDate;
-
-                System.Threading.Thread.Sleep(intervalToSendReport);
-            }
+        public void SendReport(string report)
+        {    
+            foreach (var observer in observers)
+                observer.OnNext(report);
             
         }
         

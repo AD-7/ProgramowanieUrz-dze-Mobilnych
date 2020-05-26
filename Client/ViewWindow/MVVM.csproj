@@ -123,10 +123,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Console\ConsoleApp.csproj">
-      <Project>{3f1392dd-5929-48b5-8529-614df8f8370f}</Project>
-      <Name>ConsoleApp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{4154b7dc-dcd3-40ed-97e4-27d9f8a18fd5}</Project>
       <Name>Logic</Name>

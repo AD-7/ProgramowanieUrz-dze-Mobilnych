@@ -26,6 +26,11 @@ namespace Logic
             this.api = api;
         }
 
+        public ReportSender getReportSender()
+        {
+            return api.GetReportSender();
+        }
+
         private async System.Threading.Tasks.Task ConnectAsync()
         {
             Console.WriteLine("Here");
@@ -34,6 +39,7 @@ namespace Logic
             WebSocketConnection socketConnection = await WebSocketClient.Connect(_uri, LogToConsole);
             socketConnection.onMessage = LogToConsole;
             this.api = new API(socketConnection);
+            this.api.GetReportSender();
         }
 
         private void LogToConsole(string obj)

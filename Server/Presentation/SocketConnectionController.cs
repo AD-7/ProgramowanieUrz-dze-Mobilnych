@@ -12,12 +12,15 @@ namespace Presentation
     {
         private WebSocketConnection webSocketConnection;
         private RestaurantManager restaurantManager;
+        private ClientReportSender clientReportSender;
 
-        public SocketConnectionController(WebSocketConnection webSocketConnection, RestaurantManager restaurantManager)
+        public SocketConnectionController(WebSocketConnection webSocketConnection, RestaurantManager restaurantManager, ReportSender reportSender)
         {
             this.webSocketConnection = webSocketConnection;
             this.webSocketConnection.onMessage = HandleMessage;
             this.restaurantManager = restaurantManager;
+            this.clientReportSender = new ClientReportSender("", "", "", webSocketConnection);
+            this.clientReportSender.Subscribe(reportSender);
         }
         private void HandleMessage(string message)
         {

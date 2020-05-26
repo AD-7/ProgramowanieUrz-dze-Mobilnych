@@ -10,23 +10,15 @@ using Model;
 
 namespace ViewModel
 {
-    public class ReportReceiver : IObserver<IncomeReport>
+    public class ReportReceiver : IObserver<String>
     {
         private IDisposable unsubscriber;
-        public string startDate;
-        public string endDate;
-        public string income;
-        private IncomeReport lastReport;
-
-        public ReportReceiver(string startDate, string endDate, string income)
+        public ReportReceiver()
         {
-            this.startDate = startDate;
-            this.endDate = endDate;
-            this.income = income;
             
         }
 
-        public virtual void Subscribe(IObservable<IncomeReport> provider)
+        public virtual void Subscribe(IObservable<String> provider)
         {
             unsubscriber = provider.Subscribe(this);
 
@@ -47,24 +39,9 @@ namespace ViewModel
             //do nothing
         }
 
-        public void OnNext(IncomeReport value)
+        public void OnNext(String value)
         {
-            lastReport = value;
-
-            startDate = lastReport.StartDate.ToString();
-
-            endDate = lastReport.EndDate.ToString();
-
-            income = lastReport.Income.ToString();
-
-            string toFile = "";
-            toFile += "--------------------------" + Environment.NewLine;
-            toFile += "Report start date: " + startDate + Environment.NewLine;
-            toFile += "Report end date: " + endDate + Environment.NewLine;
-            toFile += "Report income: " + income + Environment.NewLine;
-            toFile += "--------------------------" + Environment.NewLine;
-
-            File.AppendAllText("IncomeReport.txt", toFile);
+            File.AppendAllText("IncomeReport.txt", value);
 
         }
 

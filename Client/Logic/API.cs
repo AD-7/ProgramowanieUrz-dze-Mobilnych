@@ -19,6 +19,8 @@ namespace Logic
         private WebSocketConnection socketConnection;
         private string receivedMessageType;
         private string receivedMessage;
+        private const int SLEEP_TIME = 10;
+        ReportSender reportSender;
 
         private void LogToConsole(string message)
         {
@@ -27,9 +29,14 @@ namespace Logic
 
         public API(WebSocketConnection socketConnection)
         {
-            
+            this.reportSender = new ReportSender();
             this.socketConnection = socketConnection;
             this.socketConnection.onMessage = HandleMessage;
+        }
+
+        public ReportSender GetReportSender()
+        {
+            return reportSender;
         }
 
         public API()
@@ -49,6 +56,11 @@ namespace Logic
             for (int i = 1; i < splitedMessage.Length; i++)
             {
                 receivedMessage += splitedMessage[i] ;
+            }
+            
+            if (receivedMessageType == "SEND_REPORT_CFM")
+            {
+                reportSender.SendReport(receivedMessage);
             }
         }
 
@@ -109,7 +121,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.CREATE_DISH_REQ,value);
             while (receivedMessageType != "CREATE_DISH_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
         }
 
@@ -121,7 +133,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.CREATE_CLIENT_REQ, value);
             while (receivedMessageType != "CREATE_CLIENT_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
 
         }
@@ -133,7 +145,7 @@ namespace Logic
             while(receivedMessageType != "GET_MENU_CFM")
             {
 
-                Thread.Sleep(100);        
+                Thread.Sleep(SLEEP_TIME);        
             }
             //Deserialize receivedMessage
             List<DishDTG> menu = Deserializer.Deserialize_Menu(receivedMessage);
@@ -147,7 +159,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.GET_ACTIVE_ORDERS_REQ);
             while (receivedMessageType != "GET_ACTIVE_ORDERS_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
             //Deserialize receivedMessage
             List<OrderDTG> orders = Deserializer.Deserialize_Orders(receivedMessage);
@@ -159,7 +171,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.GET_ACTIVE_DELIVERIES_REQ);
             while (receivedMessageType != "GET_ACTIVE_DELIVERIES_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
             List<OrderDTG> orders = Deserializer.Deserialize_Orders(receivedMessage);
             return orders;
@@ -180,7 +192,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.GET_COMPLETED_DELIVERIES_REQ);
             while (receivedMessageType != "GET_COMPLETED_DELIVERIES_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
             List<OrderDTG> orders = Deserializer.Deserialize_Orders(receivedMessage);
             return orders;
@@ -199,7 +211,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.CREATE_ORDER_REQ, value);
             while(receivedMessageType != "CREATE_ORDER_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
 
 
@@ -211,7 +223,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.GET_COMPLETED_ORDERS_REQ);
             while (receivedMessageType != "GET_COMPLETED_ORDERS_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
             List<OrderDTG> orders = Deserializer.Deserialize_Orders(receivedMessage);
             return orders;
@@ -222,7 +234,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.COMPLETE_ORDER_REQ, id.ToString());
             while(receivedMessageType != "COMPLETE_ORDER_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
             
         }
@@ -232,7 +244,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.COMPLETE_DELIVERY_REQ, id.ToString());
             while (receivedMessageType != "COMPLETE_DELIVERY_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
         }
 
@@ -246,7 +258,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.GET_ALL_CLIENTS_REQ);
             while (receivedMessageType != "GET_ALL_CLIENTS_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
             List<ClientDTG> clients = Deserializer.Deserialize_Clients(receivedMessage);
             return clients;
@@ -257,7 +269,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.GET_ORDER_BYID_REQ,id.ToString());
             while (receivedMessageType != "GET_ORDER_BYID_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
 
             OrderDTG order = Deserializer.Deserialize_Order(receivedMessage);
@@ -269,7 +281,7 @@ namespace Logic
             SendRequestMessage(MESSAGE_TYPE.GET_DELIVERY_BYID_REQ,id.ToString());
             while (receivedMessageType != "GET_DELIVERY_BYID_CFM")
             {
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP_TIME);
             }
 
             OrderDTG order = Deserializer.Deserialize_Order(receivedMessage);
