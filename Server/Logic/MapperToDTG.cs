@@ -79,7 +79,8 @@ namespace Logic
                 Id = dish.Id,
                 Name = dish.Name,
                 Description = dish.Description,
-                Ingredients = IngredientDTGs(dish.Ingredients)          
+                Ingredients = IngredientDTGs(dish.Ingredients)  , 
+                Price = dish.Price
             };
         }
         public static List<DishDTG> DishDTGs (List<Dish> dishes)
