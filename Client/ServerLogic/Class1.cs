@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerPresentation
+namespace ServerLogic
 {
     public class Class1
     {
