@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Presentation
+namespace Logic
 {    public abstract class WebSocketConnection
     {
         public virtual Action<string> onMessage { set; protected get; } = x => { };

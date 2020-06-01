@@ -1,4 +1,5 @@
-﻿using Logic;
+﻿using Communication;
+using Logic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Presentation
+namespace Logic
 {
     public class ClientReportSender : IObserver<IncomeReport>
     {
@@ -64,7 +65,10 @@ namespace Presentation
             toFile += "Report income: " + income + Environment.NewLine;
             toFile += "--------------------------" + Environment.NewLine;
 
-            socketConnection.SendAsync("SEND_REPORT_CFM\n" + toFile);
+            CommunicationType cmd = new CommunicationType();
+            cmd.MessageType = MESSAGE_TYPE.SEND_REPORT_CFM;
+            cmd.Message = toFile;
+            socketConnection.SendAsync(Communication.Serializer.SerializeCommunicationType(cmd));
             //File.AppendAllText("IncomeReport.txt", toFile);
 
         }

@@ -1,13 +1,28 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Logic.Serializer
+namespace Communication
 {
-    public class Serializer
+    public static class Serializer
     {
        
+
+        public static string SerializeCommunicationType(CommunicationType cmd)
+        {
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+
+                var serializer = new XmlSerializer(typeof(CommunicationType));
+                serializer.Serialize(stringwriter, cmd);
+                string result = stringwriter.ToString();
+                return result;
+            }
+        }
+
+
        public static string Serialize(Object obj)
         {
             using (var stringwriter = new System.IO.StringWriter())
@@ -19,6 +34,8 @@ namespace Logic.Serializer
                 return result;
             }
         }
+
+
 
 
     }

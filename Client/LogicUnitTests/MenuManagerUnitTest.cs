@@ -17,8 +17,8 @@ namespace LogicUnitTests
             Assert.AreEqual(0, menu.Count, "Wrong dishes number");
 
             List<Ingredient> ingredients = new List<Ingredient>();
-            menuManager.AddDishToMenu("testDish", "Description", ingredients, Category.alcohol, 15.67);
-            menuManager.AddDishToMenu("testDish2", "Description", ingredients, Category.dinner, 20.75);
+            menuManager.AddDishToMenu("testDish", "Description", ingredients, CategoryDTG.alcohol, 15.67);
+            menuManager.AddDishToMenu("testDish2", "Description", ingredients, CategoryDTG.dinner, 20.75);
             menu = menuManager.GetMenu();
 
             Assert.AreEqual(2, menu.Count, "Wrong dishes number");
