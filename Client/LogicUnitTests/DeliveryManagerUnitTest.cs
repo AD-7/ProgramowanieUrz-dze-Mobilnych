@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Logic;
+using ServerLogic;
 
 using System.Threading.Tasks;
 using System.Collections.Generic;

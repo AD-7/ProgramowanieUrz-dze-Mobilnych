@@ -1,4 +1,4 @@
-﻿using Logic;
+﻿using ServerLogic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,10 +17,6 @@ namespace Presentation
         private static WebSocketConnection socketConnection = null;
         private static RestaurantManager restaurantManager = new RestaurantManager();
         
-        static void LogToConsole(string stringLog)
-        {
-            Console.WriteLine("Test");
-        }
         public static async Task Main(string[] args)
         {
             RestaurantManager restaurantManager = new RestaurantManager();
@@ -41,13 +37,7 @@ namespace Presentation
 
             while (true)
             {
-
-
-                if (socketConnection != null)
-                {
-                    Console.WriteLine("Sending...");
-                    await socketConnection.SendAsync("aa");
-                }
+                
 
             }
         }

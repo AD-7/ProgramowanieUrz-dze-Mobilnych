@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Logic;
+using ServerLogic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dane;
 
@@ -13,15 +13,15 @@ namespace LogicUnitTests
         public void GenerateIncomeReportTest()
         {
             RestaurantManager restaurantManager = new RestaurantManager();
-           // restaurantManager.CreateClient("testClient", "", "", "", "");
-            restaurantManager.CreateDish("testDish", "", new List<Ingredient>(), Category.alcohol, 15);
-            restaurantManager.CreateDish("testDish2", "", new List<Ingredient>(), Category.alcohol, 10.3);
+            restaurantManager.CreateClient("Jan Kowalski", "", "", "", "");
+            restaurantManager.CreateDish("testDish", "", new List<IngredientDTG>(), CategoryDTG.alcohol, 15);
+            restaurantManager.CreateDish("testDish2", "", new List<IngredientDTG>(), CategoryDTG.alcohol, 10.3);
 
             List<string> dishesNames = new List<string>();
             dishesNames.Add("testDish");
             dishesNames.Add("testDish2");
             dishesNames.Add("testDish");
-            ClientDTG client = new ClientDTG(1, "Jan Kowalski", "", null);
+            //ClientDTG client = new ClientDTG(1, "Jan Kowalski", "", null);
 
             restaurantManager.CreateOrder("Jan Kowalski", DateTime.Now, false, dishesNames, "", "", "", DateTime.Now.AddHours(1));
             Assert.AreEqual(1, restaurantManager.GetActiveOrders().Count, "Wrong number of active orders");

@@ -1,4 +1,4 @@
-﻿using Logic;
+﻿using ServerLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

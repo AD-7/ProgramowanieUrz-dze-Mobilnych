@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using Dane;
 
-namespace Logic
+namespace ServerLogic
 {
     public class OrderManager
     {        

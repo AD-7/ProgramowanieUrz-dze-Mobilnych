@@ -60,13 +60,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logic\Logic.csproj">
-      <Project>{4154b7dc-dcd3-40ed-97e4-27d9f8a18fd5}</Project>
-      <Name>Logic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Model\Dane.csproj">
       <Project>{9591ab89-0e7c-4b05-94ae-4e1f47739bda}</Project>
       <Name>Dane</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerLogic\ServerLogic.csproj">
+      <Project>{58339da8-d02d-4425-8372-06e95040c09c}</Project>
+      <Name>ServerLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
