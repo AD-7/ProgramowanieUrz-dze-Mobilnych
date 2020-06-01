@@ -13,10 +13,10 @@ namespace Logic
 
         private int currentOrderIndex;
 
-        public RestaurantManager()
+        public RestaurantManager(int portNumber)
         {
             currentOrderIndex = 0;
-            Task.WaitAll(Task.Run(() => ConnectAsync()));
+            Task.WaitAll(Task.Run(() => ConnectAsync(portNumber)));
 
         }
 
@@ -31,11 +31,9 @@ namespace Logic
             return api.GetReportSender();
         }
 
-        private async System.Threading.Tasks.Task ConnectAsync()
+        private async System.Threading.Tasks.Task ConnectAsync(int portNumber)
         {
-            Console.WriteLine("Here");
-            int p2p_port = 50216;
-            Uri _uri = new Uri($@"ws://localhost:{p2p_port}/");
+            Uri _uri = new Uri($@"ws://localhost:{portNumber}/");
             WebSocketConnection socketConnection = await WebSocketClient.Connect(_uri, LogToConsole);
             socketConnection.onMessage = LogToConsole;
             this.api = new API(socketConnection);
@@ -123,6 +121,7 @@ namespace Logic
                 //else
                 //{
                 api.CreateOrder(currentOrderIndex, clientName, orderDate, dishesstr, delivery, deliveryAddress, deliveryEndTime);
+
                 //}
             }
         }

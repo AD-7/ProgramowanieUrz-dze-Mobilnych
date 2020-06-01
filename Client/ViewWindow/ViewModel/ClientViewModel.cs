@@ -92,7 +92,7 @@ namespace ViewModel
 
         private void AddClient()
         {
-            Task.Run(() => restaurantManager.CreateClient(ClientName,ClientPhone,ClientStreet,ClientNumber,ClientPostal));
+            restaurantManager.CreateClient(ClientName,ClientPhone,ClientStreet,ClientNumber,ClientPostal);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

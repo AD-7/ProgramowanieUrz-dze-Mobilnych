@@ -71,7 +71,7 @@ namespace ViewModel
         private void addDishCommand()
         {
 
-            Task.Run(()=>restaurantManager.CreateDish(DishName, DishDesc, null, (CategoryDTG)SelectedIndexCategory, DishPrice));
+            restaurantManager.CreateDish(DishName, DishDesc, null, (CategoryDTG)SelectedIndexCategory, DishPrice);
 
         }
 

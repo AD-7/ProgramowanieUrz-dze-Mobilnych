@@ -43,6 +43,11 @@ namespace Logic
 
         }
 
+        public void Disconnect()
+        {
+            socketConnection.DisconnectAsync();
+        }
+
         private void HandleMessage(string message)
         {
 
