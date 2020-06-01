@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ViewModel
@@ -70,7 +71,7 @@ namespace ViewModel
         private void addDishCommand()
         {
 
-            restaurantManager.CreateDish(DishName, DishDesc, null, (CategoryDTG)SelectedIndexCategory, DishPrice);
+            Task.Run(()=>restaurantManager.CreateDish(DishName, DishDesc, null, (CategoryDTG)SelectedIndexCategory, DishPrice));
 
         }
 

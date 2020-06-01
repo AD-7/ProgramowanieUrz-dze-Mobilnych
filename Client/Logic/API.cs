@@ -30,6 +30,7 @@ namespace Logic
             this.reportSender = new ReportSender();
             this.socketConnection = socketConnection;
             this.socketConnection.onMessage = HandleMessage;
+            this.receivedAnswer = new CommunicationType();
         }
 
         public ReportSender GetReportSender()

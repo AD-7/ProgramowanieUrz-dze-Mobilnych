@@ -184,7 +184,7 @@ namespace ViewModel
         {
             if(SelectedClient != null)
             {
-                restaurantManager.CreateOrder(SelectedClient.Name, DateTime.Now, Delivery, dishesNames, "", "", "", DateTime.Now.AddHours(1));
+                restaurantManager.CreateOrder(SelectedClient.Name, DateTime.Now, Delivery, dishesNames, "", "", "", DateTime.Now.AddHours(1));                
                 Clear();
                 Delivery = false;
                 RefreshView();

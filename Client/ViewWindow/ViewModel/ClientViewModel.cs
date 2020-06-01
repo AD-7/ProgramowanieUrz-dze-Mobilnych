@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ViewModel
@@ -91,7 +92,7 @@ namespace ViewModel
 
         private void AddClient()
         {
-            restaurantManager.CreateClient(ClientName,ClientPhone,ClientStreet,ClientNumber,ClientPostal);
+            Task.Run(() => restaurantManager.CreateClient(ClientName,ClientPhone,ClientStreet,ClientNumber,ClientPostal));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
