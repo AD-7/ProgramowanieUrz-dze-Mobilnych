@@ -79,7 +79,8 @@ namespace ServerLogic
                 Id = dish.Id,
                 Name = dish.Name,
                 Description = dish.Description,
-                Ingredients = IngredientDTGs(dish.Ingredients)  , 
+                Ingredients = IngredientDTGs(dish.Ingredients),
+                Category =(CategoryDTG)dish.Category,
                 Price = dish.Price
             };
         }

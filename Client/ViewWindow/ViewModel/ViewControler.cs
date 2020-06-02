@@ -69,7 +69,7 @@ namespace ViewModel
         public ViewControler()
         {
 
-            restaurantManager = new RestaurantManager(5720);
+            restaurantManager = new RestaurantManager(50149);
             
             dishViewModel = new DishViewModel(restaurantManager);
             clientViewModel = new ClientViewModel(restaurantManager);
