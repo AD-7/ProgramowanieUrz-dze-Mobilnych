@@ -13,14 +13,18 @@ namespace ServerLogic
         private WebSocketConnection webSocketConnection;
         private RestaurantManager restaurantManager;
         private ClientReportSender clientReportSender;
+        private ClientAdvertSender clientAdvertSender;
 
-        public SocketConnectionController(WebSocketConnection webSocketConnection, RestaurantManager restaurantManager, ReportSender reportSender)
+        public SocketConnectionController(WebSocketConnection webSocketConnection, RestaurantManager restaurantManager, ReportSender reportSender, AdvertSender advertSender)
         {
             this.webSocketConnection = webSocketConnection;
             this.webSocketConnection.onMessage = HandleMessage;
             this.restaurantManager = restaurantManager;
             this.clientReportSender = new ClientReportSender("", "", "", webSocketConnection);
             this.clientReportSender.Subscribe(reportSender);
+
+            this.clientAdvertSender = new ClientAdvertSender(webSocketConnection);
+            this.clientAdvertSender.Subscribe(advertSender);
         }
         private void HandleMessage(string message)
         {

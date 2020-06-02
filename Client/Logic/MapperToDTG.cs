@@ -1,4 +1,5 @@
 ﻿using Dane;
+using Logic.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -129,6 +130,26 @@ namespace Logic
             };
 
         }
+        public static AdvertisementDTG advertisementDTG(Advertisement ADVERT)
+        {
+            return new AdvertisementDTG()
+            {
+                Text = ADVERT.Text,
+                HourFrom = ADVERT.HourFrom,
+                HourTo = ADVERT.HourTo
+            };
+
+        }
+        public static List<AdvertisementDTG> AdvertisementDTGs(List<Advertisement> adverts)
+        {
+            List<AdvertisementDTG> newAdverts = new List<AdvertisementDTG>();
+            foreach (Advertisement advert in adverts)
+            {
+                newAdverts.Add(advertisementDTG(advert));
+            }
+            return newAdverts;
+        }
+
 
     }
 }

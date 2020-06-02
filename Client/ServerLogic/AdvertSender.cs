@@ -1,21 +1,21 @@
-﻿using Dane;
+﻿using ServerLogic.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ServerLogic
 {
-    public class ReportSender : IObservable<IncomeReport>
+    public class AdvertSender : IObservable<AdvertReport>
     {
-        private List<IObserver<IncomeReport>> observers;
+        private List<IObserver<AdvertReport>> observers;
         private int intervalToSendReport;
         private RestaurantManager restaurantManager;
         private DateTime lastReportDate;
-        
 
-        public ReportSender(RestaurantManager restaurantManager, int intervalToSendReport)
+
+        public AdvertSender(RestaurantManager restaurantManager, int intervalToSendReport)
         {
-            observers = new List<IObserver<IncomeReport>>();
+            observers = new List<IObserver<AdvertReport>>();
             this.restaurantManager = restaurantManager;
             this.intervalToSendReport = intervalToSendReport;
             lastReportDate = DateTime.Now;
@@ -23,10 +23,10 @@ namespace ServerLogic
 
         private class Unsubscriber : IDisposable
         {
-            private List<IObserver<IncomeReport>> _observers;
-            private IObserver<IncomeReport> _observer;
+            private List<IObserver<AdvertReport>> _observers;
+            private IObserver<AdvertReport> _observer;
 
-            public Unsubscriber(List<IObserver<IncomeReport>> observers, IObserver<IncomeReport> observer)
+            public Unsubscriber(List<IObserver<AdvertReport>> observers, IObserver<AdvertReport> observer)
             {
                 this._observers = observers;
                 this._observer = observer;
@@ -37,7 +37,7 @@ namespace ServerLogic
                 if (!(_observer == null)) _observers.Remove(_observer);
             }
         }
-        public IDisposable Subscribe(IObserver<IncomeReport> observer)
+        public IDisposable Subscribe(IObserver<AdvertReport> observer)
         {
             if (!observers.Contains(observer))
                 observers.Add(observer);
@@ -47,10 +47,10 @@ namespace ServerLogic
 
         public void SendReport()
         {
-            while(true)
+            while (true)
             {
                 DateTime sendReportDate = DateTime.Now;
-                IncomeReport report = restaurantManager.GenerateIncomeReport(lastReportDate, sendReportDate);
+                AdvertReport report = new AdvertReport(restaurantManager.GetAdverts());
                 foreach (var observer in observers)
                     observer.OnNext(report);
                 lastReportDate = sendReportDate;
@@ -59,8 +59,8 @@ namespace ServerLogic
 
                 System.Threading.Thread.Sleep(intervalToSendReport);
             }
-            
+
         }
-        
+
     }
 }

@@ -12,7 +12,7 @@ namespace ServerLogic
         private MenuManager menuManager { get; set; }
         private DeliveryManager deliveryManager { get; set; }
         private OrderManager orderManager { get; set; }
-
+        private List<Advertisement> adverts { get;  set; }
         private int currentOrderIndex;
 
         public RestaurantManager()
@@ -21,6 +21,7 @@ namespace ServerLogic
             orderManager = new OrderManager();
             menuManager = new MenuManager();
             deliveryManager = new DeliveryManager();
+            this.adverts = new List<Advertisement>();
             currentOrderIndex = 0;
         }
 
@@ -31,9 +32,14 @@ namespace ServerLogic
             this.CreateDish("testDish2", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 8.50);
             this.CreateDish("testDish3", "s", new List<IngredientDTG>(), CategoryDTG.alcohol, 5.50);
             this.CreateClient("Imie Nazwisko", "606060606", "", "", "");
-          
+           
+            this.adverts.Add(new Advertisement("Play Station 4 - Join us", 16, 22));
+            this.adverts.Add(new Advertisement("CINEMA CITY", 12, 15));
+            this.adverts.Add(new Advertisement("Biedronka - niskie ceny", 6, 11));
         }
 
+
+       
 
         public void CreateClient(string name, string phoneNumber, string street, string number, string postalCode)  // done
         {
@@ -127,7 +133,10 @@ namespace ServerLogic
 
             return MapperToDTG.DishDTGs( menuManager.GetMenu());
         }
-
+        public List<AdvertisementDTG> GetAdverts()
+        {
+            return MapperToDTG.AdvertisementDTGs(adverts);
+        }
         public List<OrderDTG> GetActiveOrders()  //done
         {
             return MapperToDTG.OrderDTGs(orderManager.ActiveOrders);

@@ -22,10 +22,10 @@
                         <ColumnDefinition Width="643*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="addOrderButton"  Content="create order" Command="{Binding createOrder}" HorizontalAlignment="Left" Margin="551,444,0,0" VerticalAlignment="Top" Width="82"  IsDefault="True" Grid.Column="2" Height="21"/>
-                    <Button x:Name="clearCard" Command="{Binding clearCard}"  Content="clear" HorizontalAlignment="Left" Margin="551,305,0,0" VerticalAlignment="Top" Width="82"  IsDefault="True" Grid.Column="2" Height="21"/>
+                    <Button x:Name="clearCard" Command="{Binding clearCard}"  Content="clear" HorizontalAlignment="Left" Margin="551,336,0,0" VerticalAlignment="Top" Width="82"  IsDefault="True" Grid.Column="2" Height="21"/>
                     <Button x:Name="addDishToListButton" Command="{Binding addDish}" Content="add selected dish" HorizontalAlignment="Left" Margin="290,31,0,0" VerticalAlignment="Top" Width="100"  IsDefault="True" Grid.Column="2" Height="18"/>
                     <Button x:Name="openDishWindow" Content="create new dish" HorizontalAlignment="Left" Margin="22,31,0,0" VerticalAlignment="Top" Width="100"  IsDefault="True" Height="18" Grid.ColumnSpan="3" Click="OpenDishWindow_Click" />
-                    <ListView x:Name="addedDishesListView" ItemsSource="{Binding Card}" HorizontalAlignment="Left" Height="246" Margin="409,54,0,0" VerticalAlignment="Top" Width="224" Grid.Column="2">
+                    <ListView x:Name="addedDishesListView" ItemsSource="{Binding Card}" HorizontalAlignment="Left" Height="246" Margin="409,85,0,0" VerticalAlignment="Top" Width="224" Grid.Column="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="130"/>
@@ -45,12 +45,13 @@
                         </ListView.View>
 
                     </ListView>
-                    <CheckBox Content="delivery" IsChecked="{Binding Path=Delivery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" HorizontalAlignment="Left" Margin="409,380,0,0" VerticalAlignment="Top"/>
-                    <ComboBox ItemsSource="{Binding Clients}" SelectedItem="{Binding Path=SelectedClient}"   DisplayMemberPath="Name" Grid.Column="2" HorizontalAlignment="Left" Margin="409,353,0,0" VerticalAlignment="Top" Width="120">
+                    <CheckBox Content="delivery" IsChecked="{Binding Path=Delivery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" HorizontalAlignment="Left" Margin="409,415,0,0" VerticalAlignment="Top"/>
+                    <ComboBox ItemsSource="{Binding Clients}" SelectedItem="{Binding Path=SelectedClient}"   DisplayMemberPath="Name" Grid.Column="2" HorizontalAlignment="Left" Margin="409,388,0,0" VerticalAlignment="Top" Width="120">
 
                     </ComboBox>
-                    <Label Content="Client:" Grid.Column="2" HorizontalAlignment="Left" Margin="409,327,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.349,0.769"/>
-                    <Button x:Name="addClientButton" Command="{Binding addClient}" Content="create client" HorizontalAlignment="Left" Margin="551,355,0,0" VerticalAlignment="Top" Width="75"  IsDefault="True" Grid.Column="2" Click="AddClientButton_Click"/>
+                    <Label Content="Client:" Grid.Column="2" HorizontalAlignment="Left" Margin="409,357,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.349,0.769"/>
+                    <Button x:Name="addClientButton" Command="{Binding addClient}" Content="create client" HorizontalAlignment="Left" Margin="551,390,0,0" VerticalAlignment="Top" Width="75"  IsDefault="True" Grid.Column="2" Click="AddClientButton_Click"/>
+                    <TextBox Text="{Binding Path=AdvertText ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"  Grid.Column="2" HorizontalAlignment="Left" Height="55" Margin="409,17,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="224"/>
 
                 </Grid>
             </TabItem>

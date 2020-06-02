@@ -120,6 +120,26 @@ namespace ServerLogic
             }
             return newOrders;
         }
+
+        public static AdvertisementDTG advertisementDTG(Advertisement ADVERT)
+        {
+            return new AdvertisementDTG()
+            {
+                Text = ADVERT.Text,
+                HourFrom = ADVERT.HourFrom,
+                HourTo = ADVERT.HourTo
+            };
+
+        }
+        public static List<AdvertisementDTG> AdvertisementDTGs(List<Advertisement> adverts)
+        {
+            List<AdvertisementDTG> newAdverts = new List<AdvertisementDTG>();
+            foreach(Advertisement advert in adverts)
+            {
+                newAdverts.Add(advertisementDTG(advert));
+            }
+            return newAdverts;
+        }
         public static MenuDTG MenuDTG(Menu menu)
         {
             return new MenuDTG()

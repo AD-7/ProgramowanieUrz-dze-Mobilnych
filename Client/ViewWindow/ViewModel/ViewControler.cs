@@ -22,7 +22,7 @@ namespace ViewModel
         private string endReportDate { get; set; }
         private string reportIncome { get; set; }
         private List<string> dishesNames { get; set; }
-
+        private string _advertText;
 
         private bool _delivery;
         public bool Delivery
@@ -35,6 +35,17 @@ namespace ViewModel
                     _delivery = value;
                     PropertyChangedHandler("Delivery");
                 }
+            }
+        }
+        public string AdvertText
+        {
+            get { return restaurantManager.api.AdvertText; }
+            set
+            {
+               
+                   _advertText = restaurantManager.api.AdvertText ;
+                    PropertyChangedHandler("AdvertText");
+                
             }
         }
 
@@ -69,7 +80,7 @@ namespace ViewModel
         public ViewControler()
         {
 
-            restaurantManager = new RestaurantManager(50149);
+            restaurantManager = new RestaurantManager(51359);
             
             dishViewModel = new DishViewModel(restaurantManager);
             clientViewModel = new ClientViewModel(restaurantManager);

@@ -1,5 +1,6 @@
 ﻿
 using Dane;
+using Logic.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Logic
 {
     public class RestaurantManager
     {
-        private API api;
+        public API api;
 
         private int currentOrderIndex;
 
@@ -173,6 +174,7 @@ namespace Logic
                 return api.GetCompletedOrders();
             return new List<OrderDTG>();
         }
+       
 
         public DishDTG GetDishById(int Id)
         {

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Logic.DeserializerClient;
 using Communication;
+using Logic.DataTransfer;
 
 namespace Logic
 {
@@ -14,11 +15,12 @@ namespace Logic
     {
 
         private WebSocketConnection socketConnection;
-        private string receivedMessageType;
-        private string receivedMessage;
+   
         private CommunicationType receivedAnswer;
         private const int SLEEP_TIME = 10;
         ReportSender reportSender;
+        public string AdvertText ="";
+
 
         private void LogToConsole(string message)
         {
@@ -53,12 +55,33 @@ namespace Logic
 
             receivedAnswer = Communication.Deserializer.Deserialize(message);
 
+            if(receivedAnswer.MessageType == MESSAGE_TYPE.GET_MENU_CFM)
+            {
+
+            }
+
             if (receivedAnswer.MessageType == MESSAGE_TYPE.SEND_REPORT_CFM)
             {
                 reportSender.SendReport(receivedAnswer.Message);
             }
 
-         
+            if(receivedAnswer.MessageType == MESSAGE_TYPE.SEND_ADVERTS_CFM)
+            {
+                List<AdvertisementDTG> advertsOnline = DeserializerClient.Deserializer.Deserialize_Adverts(receivedAnswer.Message);
+               
+                foreach(AdvertisementDTG advert in advertsOnline)
+                {
+                    if(advert.HourFrom <= DateTime.Now.Hour && advert.HourTo >= DateTime.Now.Hour)
+                    {
+                        this.AdvertText = advert.Text;
+                      
+
+                    }
+                   
+                }
+
+            }
+
         }
 
         private void SendRequestMessage(MESSAGE_TYPE messageType, List<string> value = null)

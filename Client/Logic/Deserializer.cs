@@ -1,5 +1,6 @@
 ﻿
 using Communication;
+using Logic.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +70,16 @@ namespace Logic.DeserializerClient
                 var serializer = new XmlSerializer(typeof(List<ClientDTG>));
 
                 return serializer.Deserialize(stringreader) as List<ClientDTG>;
+            }
+        }
+        public static List<AdvertisementDTG> Deserialize_Adverts(string obj)
+        {
+            using (var stringreader = new System.IO.StringReader(obj))
+            {
+
+                var serializer = new XmlSerializer(typeof(List<AdvertisementDTG>));
+
+                return serializer.Deserialize(stringreader) as List<AdvertisementDTG>;
             }
         }
 
