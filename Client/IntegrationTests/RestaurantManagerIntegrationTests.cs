@@ -50,7 +50,7 @@ namespace IntegrationTests
             List<DishDTG> dishes = restaurantManager.GetMenu();
             Assert.AreEqual(5, dishes.Count, "Wrong clients number");
             Assert.AreEqual("Chips", dishes[4].Name, "Wrong dish name");
-            Assert.AreEqual(CategoryDTG.alcohol, dishes[4].Category, "Wrong dish category");
+            Assert.AreEqual(CategoryDTG.snack, dishes[4].Category, "Wrong dish category");
         }
 
        

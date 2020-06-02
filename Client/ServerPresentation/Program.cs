@@ -43,6 +43,7 @@ namespace Presentation
                 l.Start();
                 port = ((IPEndPoint)l.LocalEndpoint).Port;
                 l.Stop();
+                port = 51359;
             }
            
             Console.WriteLine("Port: " + port);

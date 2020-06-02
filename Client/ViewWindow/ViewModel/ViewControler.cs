@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using System.Windows.Threading;
 
 namespace ViewModel
 {
@@ -42,9 +42,12 @@ namespace ViewModel
             get { return restaurantManager.api.AdvertText; }
             set
             {
-               
-                   _advertText = restaurantManager.api.AdvertText ;
+               if(_advertText != value)
+                {
+                    _advertText = value;
                     PropertyChangedHandler("AdvertText");
+                }
+                  
                 
             }
         }
@@ -76,6 +79,10 @@ namespace ViewModel
         public ICommand completeOrder { get; }
         public ICommand completeDelivery { get; }
 
+        private DispatcherTimer timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1.0)
+        };
 
         public ViewControler()
         {
@@ -108,6 +115,11 @@ namespace ViewModel
             createOrder = new DelegateCommand(CreateOrder);
             completeOrder = new DelegateCommand(CompleteOrder);
             completeDelivery = new DelegateCommand(CompleteDelivery);
+            timer.Tick += (o, e) =>
+            {
+                AdvertText = restaurantManager.api.AdvertText;
+            };
+            timer.Start();
 
 
             RefreshView();
