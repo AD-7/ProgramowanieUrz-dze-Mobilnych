@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dane;
+using ServerLogic;
 
 namespace LogicUnitTests
 {
@@ -13,12 +13,12 @@ namespace LogicUnitTests
         public void AddDishToMenuTest()
         {
             MenuManager menuManager = new MenuManager();
-            List<DishDTG> menu = menuManager.GetMenu();
+            List<Dish> menu = menuManager.GetMenu();
             Assert.AreEqual(0, menu.Count, "Wrong dishes number");
 
             List<Ingredient> ingredients = new List<Ingredient>();
-            menuManager.AddDishToMenu("testDish", "Description", ingredients, Category.alcohol, 15.67);
-            menuManager.AddDishToMenu("testDish2", "Description", ingredients, Category.dinner, 20.75);
+            menuManager.AddDishToMenu("testDish", "Description", ingredients, CategoryDTG.alcohol, 15.67);
+            menuManager.AddDishToMenu("testDish2", "Description", ingredients, CategoryDTG.dinner, 20.75);
             menu = menuManager.GetMenu();
 
             Assert.AreEqual(2, menu.Count, "Wrong dishes number");
@@ -31,11 +31,11 @@ namespace LogicUnitTests
         public void GetDishByNameTest()
         {
             MenuManager menuManager = new MenuManager();
-            List<DishDTG> menu = menuManager.GetMenu();
+            List<Dish> menu = menuManager.GetMenu();
 
             List<Ingredient> ingredients = new List<Ingredient>();
-            menuManager.AddDishToMenu("testDish", "Description", ingredients, Category.alcohol, 15.67);
-            menuManager.AddDishToMenu("testDish2", "Description", ingredients, Category.dinner, 20.75);
+            menuManager.AddDishToMenu("testDish", "Description", ingredients, CategoryDTG.alcohol, 15.67);
+            menuManager.AddDishToMenu("testDish2", "Description", ingredients, CategoryDTG.dinner, 20.75);
             menu = menuManager.GetMenu();
 
             Assert.AreEqual(1, menuManager.GetDishByName("testDish2").Id, "Wrong dish id");

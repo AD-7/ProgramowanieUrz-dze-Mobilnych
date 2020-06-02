@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{06DFF799-FE9A-4F66-88F0-24C67F34563A}</ProjectGuid>
+    <ProjectGuid>{54EC1CFA-CD76-48A3-BF76-9F79463A5E5C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogicUnitTests</RootNamespace>
-    <AssemblyName>LogicUnitTests</AssemblyName>
+    <RootNamespace>IntegrationTests</RootNamespace>
+    <AssemblyName>IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,24 +49,21 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientManagerUnitTest.cs" />
-    <Compile Include="DeliveryManagerUnitTest.cs" />
-    <Compile Include="OrderManagerUnitTest.cs" />
+    <Compile Include="RestaurantManagerIntegrationTests.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MenuManagerUnitTest.cs" />
-    <Compile Include="RestaurantManagerUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Model\Dane.csproj">
-      <Project>{9591ab89-0e7c-4b05-94ae-4e1f47739bda}</Project>
-      <Name>Dane</Name>
+    <ProjectReference Include="..\Logic\Logic.csproj">
+      <Project>{4154b7dc-dcd3-40ed-97e4-27d9f8a18fd5}</Project>
+      <Name>Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServerLogic\ServerLogic.csproj">
-      <Project>{58339da8-d02d-4425-8372-06e95040c09c}</Project>
-      <Name>ServerLogic</Name>
+    <ProjectReference Include="..\ServerPresentation\ServerPresentation.csproj">
+      <Project>{72c8d2ab-9b13-4d72-aff4-4b89bada60fa}</Project>
+      <Name>ServerPresentation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

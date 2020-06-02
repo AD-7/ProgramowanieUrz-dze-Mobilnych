@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using System.Windows.Threading;
 
 namespace ViewModel
 {
@@ -22,7 +22,7 @@ namespace ViewModel
         private string endReportDate { get; set; }
         private string reportIncome { get; set; }
         private List<string> dishesNames { get; set; }
-
+        private string _advertText;
 
         private bool _delivery;
         public bool Delivery
@@ -35,6 +35,20 @@ namespace ViewModel
                     _delivery = value;
                     PropertyChangedHandler("Delivery");
                 }
+            }
+        }
+        public string AdvertText
+        {
+            get { return restaurantManager.api.AdvertText; }
+            set
+            {
+               if(_advertText != value)
+                {
+                    _advertText = value;
+                    PropertyChangedHandler("AdvertText");
+                }
+                  
+                
             }
         }
 
@@ -65,11 +79,15 @@ namespace ViewModel
         public ICommand completeOrder { get; }
         public ICommand completeDelivery { get; }
 
+        private DispatcherTimer timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1.0)
+        };
 
         public ViewControler()
         {
 
-            restaurantManager = new RestaurantManager();
+            restaurantManager = new RestaurantManager(51359);
             
             dishViewModel = new DishViewModel(restaurantManager);
             clientViewModel = new ClientViewModel(restaurantManager);
@@ -97,6 +115,11 @@ namespace ViewModel
             createOrder = new DelegateCommand(CreateOrder);
             completeOrder = new DelegateCommand(CompleteOrder);
             completeDelivery = new DelegateCommand(CompleteDelivery);
+            timer.Tick += (o, e) =>
+            {
+                AdvertText = restaurantManager.api.AdvertText;
+            };
+            timer.Start();
 
 
             RefreshView();
@@ -184,7 +207,7 @@ namespace ViewModel
         {
             if(SelectedClient != null)
             {
-                restaurantManager.CreateOrder(SelectedClient.Name, DateTime.Now, Delivery, dishesNames, "", "", "", DateTime.Now.AddHours(1));
+                restaurantManager.CreateOrder(SelectedClient.Name, DateTime.Now, Delivery, dishesNames, "", "", "", DateTime.Now.AddHours(1));                
                 Clear();
                 Delivery = false;
                 RefreshView();

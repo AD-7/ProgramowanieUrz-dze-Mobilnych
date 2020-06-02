@@ -1,10 +1,9 @@
 ﻿using Dane;
-using Logic.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Logic
+namespace ServerLogic
 {
     public static class MapperToDTG
     {
@@ -80,7 +79,9 @@ namespace Logic
                 Id = dish.Id,
                 Name = dish.Name,
                 Description = dish.Description,
-                Ingredients = IngredientDTGs(dish.Ingredients)          
+                Ingredients = IngredientDTGs(dish.Ingredients),
+                Category =(CategoryDTG)dish.Category,
+                Price = dish.Price
             };
         }
         public static List<DishDTG> DishDTGs (List<Dish> dishes)
@@ -119,17 +120,7 @@ namespace Logic
             }
             return newOrders;
         }
-        public static MenuDTG MenuDTG(Menu menu)
-        {
-            return new MenuDTG()
-            {
-                Id = menu.Id,
-                Name = menu.Name,
-                Dishes = DishDTGs(menu.Dishes)
 
-            };
-
-        }
         public static AdvertisementDTG advertisementDTG(Advertisement ADVERT)
         {
             return new AdvertisementDTG()
@@ -143,13 +134,23 @@ namespace Logic
         public static List<AdvertisementDTG> AdvertisementDTGs(List<Advertisement> adverts)
         {
             List<AdvertisementDTG> newAdverts = new List<AdvertisementDTG>();
-            foreach (Advertisement advert in adverts)
+            foreach(Advertisement advert in adverts)
             {
                 newAdverts.Add(advertisementDTG(advert));
             }
             return newAdverts;
         }
+        public static MenuDTG MenuDTG(Menu menu)
+        {
+            return new MenuDTG()
+            {
+                Id = menu.Id,
+                Name = menu.Name,
+                Dishes = DishDTGs(menu.Dishes)
 
+            };
+
+        }
 
     }
 }
