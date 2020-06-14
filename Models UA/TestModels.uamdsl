@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="UAModelDesignerSolution.xslt"?>
+<UAModelDesignerSolution xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>UnitTestsData</Name>
+  <Projects>
+    <UAModelDesignerProject ProjectIdentifier="be767e1a-245c-4051-a151-b3708704f464">
+      <Name>DataTypeTest</Name>
+      <CSVFileName>$(ProjectFileName).csv</CSVFileName>
+      <BuildOutputDirectoryName>$(ProjectFileName)</BuildOutputDirectoryName>
+      <FileName>DataTypeTest.xml</FileName>
+    </UAModelDesignerProject>
+  </Projects>
+</UAModelDesignerSolution>

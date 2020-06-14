@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="OPCFModelDesign.xslt"?>
+<ModelDesign xmlns:cas="http://cas.eu/UA/CommServer/UnitTests/DataTypeTest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns:ua="http://opcfoundation.org/UA/" TargetNamespace="http://cas.eu/UA/CommServer/UnitTests/DataTypeTest" xmlns="http://opcfoundation.org/UA/ModelDesign.xsd">
+  <Namespaces>
+    <Namespace Name="cas" Prefix="DataTypeTest" XmlPrefix="cas">http://cas.eu/UA/CommServer/UnitTests/DataTypeTest</Namespace>
+    <Namespace Name="ua" XmlPrefix="ua">http://opcfoundation.org/UA/</Namespace>
+  </Namespaces>
+  <ObjectType SymbolicName="cas:Menu">
+    <BrowseName>Menu</BrowseName>
+    <DisplayName>Menu</DisplayName>
+    <Description>Menu</Description>
+    <Children>
+      <Variable SymbolicName="cas:Id" DataType="ua:Integer" AccessLevel="Read">
+        <BrowseName>Id</BrowseName>
+        <DisplayName>Id</DisplayName>
+      </Variable>
+      <Variable SymbolicName="cas:NameNotSet52" DataType="ua:String" AccessLevel="Read">
+        <BrowseName>Name</BrowseName>
+        <DisplayName>Name</DisplayName>
+      </Variable>
+      <Object SymbolicName="cas:Dishes">
+        <BrowseName>Dishes</BrowseName>
+        <DisplayName>Dishes</DisplayName>
+      </Object>
+      <Method SymbolicName="cas:Menu">
+        <BrowseName>Menu</BrowseName>
+        <DisplayName>Menu</DisplayName>
+      </Method>
+    </Children>
+  </ObjectType>
+  <ObjectType SymbolicName="cas:NameNotSet53">
+    <BrowseName>Dish</BrowseName>
+    <DisplayName>Dish</DisplayName>
+    <Children>
+      <Property SymbolicName="cas:Name" DataType="ua:String" AccessLevel="Read">
+        <BrowseName>Name</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:Description" DataType="ua:String" AccessLevel="Read">
+        <BrowseName>Description</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:Price" DataType="ua:Integer" AccessLevel="Read">
+        <BrowseName>Price</BrowseName>
+      </Property>
+      <Method SymbolicName="cas:Dish">
+        <BrowseName>Dish</BrowseName>
+      </Method>
+      <Property SymbolicName="cas:DishId" DataType="ua:Integer" AccessLevel="Read">
+        <BrowseName>Id</BrowseName>
+      </Property>
+    </Children>
+  </ObjectType>
+  <Object SymbolicName="cas:Client">
+    <BrowseName>Client</BrowseName>
+    <Children>
+      <Property SymbolicName="cas:ClientId" DataType="ua:Integer" AccessLevel="Read">
+        <BrowseName>Id</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:ClientName" DataType="ua:String" AccessLevel="Read">
+        <BrowseName>Name</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:PhoneNumber" DataType="ua:Integer" AccessLevel="Read">
+        <BrowseName>PhoneNumber</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:NameNotSet23">
+        <BrowseName>Address</BrowseName>
+      </Property>
+    </Children>
+  </Object>
+  <Object SymbolicName="cas:Address">
+    <BrowseName>Address</BrowseName>
+  </Object>
+  <Object SymbolicName="cas:Advertisement">
+    <BrowseName>Advertisement</BrowseName>
+    <Children>
+      <Property SymbolicName="cas:Text" DataType="ua:String">
+        <BrowseName>Text</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:HourFrom" DataType="ua:Integer" AccessLevel="ReadWrite">
+        <BrowseName>HourFrom</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:HourTo" DataType="ua:Integer" AccessLevel="ReadWrite">
+        <BrowseName>HourTo</BrowseName>
+      </Property>
+    </Children>
+  </Object>
+  <Object SymbolicName="cas:Order">
+    <BrowseName>Order</BrowseName>
+    <Children>
+      <Property SymbolicName="cas:OrderDate" DataType="ua:Date" AccessLevel="Read">
+        <BrowseName>OrderDate</BrowseName>
+      </Property>
+      <Object SymbolicName="cas:Dishes">
+        <BrowseName>Dishes</BrowseName>
+      </Object>
+      <Variable SymbolicName="cas:TotalPrice" DataType="ua:Double" AccessLevel="Read">
+        <BrowseName>TotalPrice</BrowseName>
+      </Variable>
+      <Property SymbolicName="cas:CompleteOrderDate" DataType="ua:Date" AccessLevel="Read">
+        <BrowseName>CompleteOrderDate</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:cLIENT">
+        <BrowseName>Client</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:OrderId" DataType="ua:Integer" AccessLevel="Read">
+        <BrowseName>Id</BrowseName>
+      </Property>
+    </Children>
+  </Object>
+  <Object SymbolicName="cas:Product">
+    <BrowseName>Product</BrowseName>
+    <Children>
+      <Property SymbolicName="cas:ProductId" DataType="ua:Integer" AccessLevel="Read">
+        <BrowseName>Id</BrowseName>
+      </Property>
+      <Property SymbolicName="cas:ProductName" DataType="ua:String" AccessLevel="Read">
+        <BrowseName>Name</BrowseName>
+      </Property>
+    </Children>
+  </Object>
+</ModelDesign>
